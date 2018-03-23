@@ -1,0 +1,88 @@
+//--------------------------------------  Colours
+
+$blue:   #0249EF;
+$purple: #B102EF;
+$green:  #B102EF;
+$white:  #FDFDFD;
+$black:  #1A1A1A;
+$grey:   #404040;
+
+$primary-color:  			$blue;
+$secondary-color:			$purple;
+$nav-color:      		 	$black;
+$nav-text-hover: 		 	$secondary-color;
+$nav-hover-bg:			 	$primary-color;
+$link-color:      		$primary-color;
+$text-link-color: 		$black;
+$text-color: 					$black;
+$body-bg:    					$white;
+$lightgrey:						lighten($grey, 60%);
+
+
+//--------------------------------------  Typography
+
+$header-font:    "Cooper Hewitt", "Helvetica Neue", Helvetica, sans-serif;
+$body-font:      Georgia, "Times New Roman", times, serif;
+$base-font-size: 20px;
+
+@mixin body-text {
+	font-family: $body-font;
+	color: $text-color;
+	font-size: $base-font-size;
+	line-height: 1.5;
+}
+
+@mixin header-text {
+  font: {
+    family: $header-font;
+    weight: 600;
+  }
+  color: $black;
+  text-transform: uppercase;
+	margin-top: 3rem;
+}
+
+@mixin nav-text {
+  font: {
+    family: $header-font;
+    weight: 600;
+    size: 0.9rem;
+  }
+	text-transform: uppercase;
+}
+
+@mixin linear-gradient($start: #fff, $from: 0%, $stop: #000, $to: 100%) {
+    background: $start;
+    background: -webkit-gradient(linear, left top, left bottom, from($start), to($stop));
+    background: -moz-linear-gradient(center top, $start $from, $stop $to);
+    background: -moz-gradient(center top, $start $from, $stop $to);
+    background: -webkit-linear-gradient(top, $start $from,$stop $to);
+    background: -o-linear-gradient(top, $start $from,$stop $to);
+    background: -ms-linear-gradient(top, $start $from,$stop $to);
+    background: linear-gradient(to bottom, $start $from,$stop $to);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$start}', endColorstr='#{$stop}',GradientType=0 );
+}
+
+@mixin hover-color() {
+	&:hover,
+	&:focus {
+		color: $white;
+		background-color: $secondary-color;
+		background-image: none;
+		text-shadow: none;
+	}
+}
+
+@mixin nicelink($link: lighten($text-color, 5%), $background: $white, $padding: 0, $position: 0.95em ) {
+		@include hover-color;
+    color: $link;
+    padding: 0 $padding;
+    text-decoration: none;
+    text-shadow: 3px 0 0 $background, 3px 0 0 $background, -3px 0 0 $background, -3px 0 0 $background;
+    background-image: linear-gradient(to bottom, rgba($black, 0) 75%, rgba(darken($link-color, 5%), 0.85) 75%, transparent);
+    background-repeat: repeat-x;
+    background-size: 3px 3px;
+    background-position: 0 $position;
+    display: inline;
+    word-break: break-word;
+}

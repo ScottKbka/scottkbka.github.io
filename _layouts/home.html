@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include head.html %}
+  <body>
+    {% include nav.html %}
+
+    <div class="container content">
+      <div class="row justify-content-md-center">
+        <div class="col col-md-8">
+          {{ content | markdownify }}
+        </div>
+      </div>
+    </div>
+
+    {% include js.html %}
+  </body>
+</html>
