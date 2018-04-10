@@ -1,4 +1,4 @@
-Hi, I'm Cassidy and my pronouns are [they/them](http://pronoun.is/they/.../themself). I am a Software Engineer at [HomeStars](http://homestars.com) and was recently the Lead Developer at [itsme](http://www.itsme3d.com).
+Hi, I'm Cassidy and my pronouns are [they/them](http://pronoun.is/they/.../themself). I am a Software Engineer at [HomeStars](http://homestars.com).
 
 You can reach me at [hello@cassidy.codes](mailto:hello@cassidy.codes).
 
