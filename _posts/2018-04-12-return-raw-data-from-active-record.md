@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Returning Raw Data from ActiveRecord Queries"
+title:  "Writing Super Fast Queries in Rails"
 date:   2018-04-12
 ---
 At work this week I had to speed up a background job that was clogging up our queue. This job aggregates data on records and posts to our Elastic Search index. It was suffering from all kinds of extra database calls. I had lots of fun working on this query! It’s so satisfying to make things fast.
