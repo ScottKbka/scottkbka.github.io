@@ -23,6 +23,7 @@ $lightgrey:						lighten($grey, 60%);
 
 $header-font:    "Cooper Hewitt", "Helvetica Neue", Helvetica, sans-serif;
 $body-font:      Georgia, "Times New Roman", times, serif;
+$monospace-font: "Menlo","Monaco","Consolas","Liberation Mono","Courier New",monospace;
 $base-font-size: 20px;
 
 @mixin body-text {

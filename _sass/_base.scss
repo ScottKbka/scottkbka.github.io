@@ -67,6 +67,16 @@ a {
 	max-width: 100%;
 }
 
+.content table {
+	font-family: $monospace-font;
+	margin-bottom: 25px;
+
+	td {
+		border: 1px solid $lightgrey;
+		padding: 3px 8px;
+	}
+}
+
 .audio {
 	width: 100%;
 }
