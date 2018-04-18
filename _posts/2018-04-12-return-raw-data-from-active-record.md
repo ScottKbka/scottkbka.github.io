@@ -73,7 +73,7 @@ MyPostSummary.summarize
 #         fifteen_days: 83 } }
 ```
 
-Pretty repetitive, right? If we’re building a summary of all of our the posts in our blog, we’er going to be doing a lot of unnecessary counting!
+Pretty repetitive, right? If we’re building a summary of all of our the posts in our blog, we're going to be doing a lot of unnecessary counting!
 
 ## Using `select`
 
