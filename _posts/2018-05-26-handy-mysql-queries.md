@@ -90,7 +90,7 @@ But what about our tag_name and tag_description? Here, we need to concatenate tw
 
 ## Concat_ws
 
-We know that `Group_concat` gives us a string, so if we look under String Functions in the MySQL docs, we'll find `[Concat_ws](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat-ws)`. `Concat_ws` lets us concatenate two or more strings with a separator between them. The separator is a comma by default, but for legibility, we want a space too, so let's use the `SEPARATOR` option. Here are our steps:
+We know that `Group_concat` gives us a string, so if we look under String Functions in the MySQL docs, we'll find [`Concat_ws`](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat-ws). `Concat_ws` lets us concatenate two or more strings with a separator between them. The separator is a comma by default, but for legibility, we want a space too, so let's use the `SEPARATOR` option. Here are our steps:
 
 Concatenate the tag name:
 
