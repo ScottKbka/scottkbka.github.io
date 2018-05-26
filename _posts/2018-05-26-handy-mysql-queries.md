@@ -8,12 +8,14 @@ Recently, I needed to build a query that would transform data in our database in
 Here's what the database might look like:
 
 *posts*
+
 id | title
 1 | Blogging about dogs is fun!
 2 | Look at these cute dogs
 3 | Wow how about these cute dogs
 
 *post_tags*
+
 post_id | tag_id
 1 | 1
 1 | 2
@@ -22,6 +24,7 @@ post_id | tag_id
 3 | 1
 
 *tags*
+
 id | name | description
 1 | dogs | Posts about dogs
 2 | cute | Cute things
