@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Concatenating MySQL Results with Group_concat and Concat_ws &middot; Cassidy K
+		</title>
+	
+		
+ 		<link rel="stylesheet" href="/css/style.css">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Cassidy K" />
+	</head>
+	
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Cassidy K</h2>
+				</a>
+				<ul>
+    <li><a href="https://github.com/cassidycodes">GitHub</a></li>
+    <li><a href="https://twitter.com/cassidycodes">Twitter</a></li>
+</ul>
+
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Cassidy K
+        <br>
+        <span>on&nbsp;</span><time datetime="2018-05-26 00:00:00 &#43;0000 UTC">May 26, 2018</time>
+</div>
+
+		<h1 class="post-title">Concatenating MySQL Results with Group_concat and Concat_ws</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>Recently, I needed to build a query that would transform data in our database into a format that we posted to ElasticSearch. I&rsquo;ll use the example of blog posts here since they&rsquo;re easy for everyone to grasp. Imagine that each post can have many tags and you want one field on ElasticSearch with the tag ids and another field that has the tag names and description.</p>
+
+<p>Here&rsquo;s what the database might look like:</p>
+
+<p><em>posts</em></p>
+
+<pre><code>id | title
+---|------------------------------
+1  | Blogging about dogs is fun!
+2  | Look at these cute dogs
+3  | Wow how about these cute dogs
+</code></pre>
+
+<p><em>post_tags</em></p>
+
+<pre><code>post_id | tag_id
+--------|-------
+1       | 1
+1       | 2
+2       | 1
+2       | 3
+3       | 1
+</code></pre>
+
+<p><em>tags</em></p>
+
+<pre><code>id | name | description
+---|------|-----------------
+1  | dogs | Posts about dogs
+2  | cute | Cute things
+3  | omg  | OMG CUTE
+</code></pre>
+
+<p>And here is the result we&rsquo;re looking for:</p>
+
+<pre><code>id | title                       | tag_ids | tag_names_descriptions
+---|-----------------------------|---------|------------------------------------------
+1  | Blogging about dogs is fun! | 1, 2    | dogs, cute, Posts about dogs, Cute things
+</code></pre>
+
+<h2 id="starting-query">Starting Query</h2>
+
+<p>Let&rsquo;s start by retrieving a join table of our posts and tags. We&rsquo;ll limit this to one post to keep our tables small for this example.</p>
+
+<pre><code class="language-sql">SELECT post.id,
+       post.title,
+       tag.id          AS tag_id,
+       tag.name        AS tag_name,
+       tag.description AS tag_description
+FROM   posts post
+       INNER JOIN posts_tags pt
+               ON pt.post_id = post.id
+       INNER JOIN tags tag
+               ON tag.id = pt.tag_id
+LIMIT  1;
+</code></pre>
+
+<pre><code>id | title                       | tag_id | tag_name | tag_description
+---|-----------------------------|--------|----------|-----------------
+1  | Blogging about dogs is fun! | 1      | dogs     | Posts about dogs
+2  | Blogging about dogs is fun! | 2      | cute     | Cute things
+</code></pre>
+
+<p>Ok, great, we have a table with our post and its tags, but we have duplicate rows! We can use <code>GROUP BY</code> to group these row by the post id, but then we&rsquo;ll lose the tag data in the second row and get a result that looks like this:</p>
+
+<pre><code>id | title                       | tag_id | tag_name | tag_description
+---|-----------------------------|--------|----------|-----------------
+1  | Blogging about dogs is fun! | 1      | dogs     | Posts about dogs
+</code></pre>
+
+<h2 id="group-concat">Group_concat</h2>
+
+<p>We can use the <code>Group_concat</code> function to concatenate data from multiple rows when we use <code>GROUP BY</code>:</p>
+
+<pre><code class="language-sql">SELECT post.id,
+       post.title,
+       Group_concat(tag.id) AS tag_ids,
+       tag.name             AS tag_name,
+       tag.description      AS tag_description
+FROM   posts post
+       INNER JOIN posts_tags pt
+               ON pt.post_id = post.id
+       INNER JOIN tags tag
+               ON tag.id = pt.tag_id
+GROUP  BY post.id
+LIMIT  1;  
+</code></pre>
+
+<pre><code>id | title                       | tag_ids | tag_name | tag_description
+---|-----------------------------|---------|----------|-----------------
+1  | Blogging about dogs is fun! | 1, 2    | dogs     | Posts about dogs
+</code></pre>
+
+<p>Take a look at <a href="https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_group-concat">the MySQL Docs for Group_concat</a> you can do some cool things with it like ensure the values are unique, sort the values, and choose a custom separator.</p>
+
+<p>But what about our tag_name and tag_description? Here, we need to concatenate two separate columns into one!</p>
+
+<h2 id="concat-ws">Concat_ws</h2>
+
+<p>We know that <code>Group_concat</code> gives us a string, so if we look under String Functions in the MySQL docs, we&rsquo;ll find <a href="https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat-ws"><code>Concat_ws</code></a>. <code>Concat_ws</code> lets us concatenate two or more strings with a separator between them. The separator is a comma by default, but for legibility, we want a space too, so let&rsquo;s use the <code>SEPARATOR</code> option. Here are our steps:</p>
+
+<p>Concatenate the tag name:</p>
+
+<pre><code class="language-sql">Group_concat(tag.name SEPARATOR &quot;, &quot;)
+</code></pre>
+
+<p>Concatenate the tag description:</p>
+
+<pre><code class="language-sql">Group_concat(tag.description SEPARATOR &quot;, &quot;)
+</code></pre>
+
+<p>And concatenate both of those!</p>
+
+<pre><code class="language-sql">Concat_ws(
+  &quot;, &quot;
+  Group_concat(tag.name SEPARATOR &quot;, &quot;),
+  Group_concat(tag.description SEPARATOR &quot;, &quot;)
+)
+</code></pre>
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+<pre><code class="language-sql">SELECT post.id,
+       post.title,
+       Group_concat(tag.id) AS tag_ids,
+       Concat_ws(
+         &quot;, &quot;
+         Group_concat(tag.name SEPARATOR &quot;, &quot;),
+         Group_concat(tag.description SEPARATOR &quot;, &quot;)
+       )                    AS tag_names_descriptions
+FROM   posts post
+       INNER JOIN posts_tags pt
+               ON pt.post_id = post.id
+       INNER JOIN tags tag
+               ON tag.id = pt.tag_id
+GROUP  BY post.id
+LIMIT  1;
+</code></pre>
+
+<pre><code>id | title                       | tag_ids | tag_name | tag_descriptions
+---|-----------------------------|---------|----------|-------------------------------
+1  | Blogging about dogs is fun! | 1, 2    | dogs, cute, Posts about dogs, Cute things
+</code></pre>
+
+<h2 id="nice-work">Nice work!</h2>
+
+<p>In this post, we&rsquo;ve learned how to use <code>Group_concat</code> to concatenate data in a column when using <code>GROUP BY</code>. <code>Group_concat</code> lets us keep data that would otherwise disappear when we group things.</p>
+
+<p>We also learned how to combine data from multiple columns by using <code>Concat_ws</code> together with <code>Group_concat</code>. With this function, we can join multiple columns and rows together into one value.</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/blog/2018/04/12/return-raw-data-from-active-record/" class="left arrow">&#8592;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-01-05 22:43:27.067735 -0500 EST m=&#43;0.091166602">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

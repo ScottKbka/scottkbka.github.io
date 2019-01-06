@@ -1,5 +1,192 @@
----
-layout: home
----
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+	<meta name="generator" content="Hugo 0.53" />
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="">
+	
+		<title>
+				Cassidy K
+		</title>
+	
+		
+ 		<link rel="stylesheet" href="/css/style.css">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="https://cassidy.codes/index.xml" rel="alternate" type="application/rss+xml" title="Cassidy K" />
+	</head>
+	
 
-{% include about.md %}
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Cassidy K</h2>
+				</a>
+				<ul>
+    <li><a href="https://github.com/cassidycodes">GitHub</a></li>
+    <li><a href="https://twitter.com/cassidycodes">Twitter</a></li>
+</ul>
+
+			</div>
+		</nav>
+
+        
+
+<main>
+	
+
+
+	<div class="catalogue">
+		
+			<a href="https://cassidy.codes/blog/2018/05/26/concatenating-mysql-results-with-group-by/" class="catalogue-item">
+    <div>
+        <time datetime="2018-05-26 00:00:00 &#43;0000 UTC" class="catalogue-time">May 26, 2018</time>
+        <h1 class="catalogue-title">Concatenating MySQL Results with Group_concat and Concat_ws</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            Recently, I needed to build a query that would transform data in our database into a format that we posted to ElasticSearch. I&rsquo;ll use the example of blog posts here since they&rsquo;re easy for everyone to grasp. Imagine that each post can have many tags and you want one field on ElasticSearch with the tag ids and another field that has the tag names and description.
+Here&rsquo;s what the database might look like:
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2018/04/12/return-raw-data-from-active-record/" class="catalogue-item">
+    <div>
+        <time datetime="2018-04-12 00:00:00 &#43;0000 UTC" class="catalogue-time">April 12, 2018</time>
+        <h1 class="catalogue-title">Writing Super Fast Queries in Rails</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            At work this week I had to speed up a background job that was clogging up our queue. This job aggregates data on records and posts to our Elastic Search index. It was suffering from all kinds of extra database calls. I had lots of fun working on this query! It’s so satisfying to make things fast.
+Here’s a bit of what I learned about building SQL queries that can get tough with a typical ActiveRecord object.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2018-03-22-rewrite-git-history/" class="catalogue-item">
+    <div>
+        <time datetime="2018-03-22 00:00:00 &#43;0000 UTC" class="catalogue-time">March 22, 2018</time>
+        <h1 class="catalogue-title">How to Rewrite git History when Collaborating with Others</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            I was recently working on a new node project, and while I was first testing things out, I committed the contents of the dist directory to git. Later on, I was getting the project set up with Docker, and I realized I didn’t want the dist in the repo as it would increase the size of the Docker image.
+Removing files from git is a bit tricky. You can add it to the .
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2017/05/12-toronto-sound-prints/" class="catalogue-item">
+    <div>
+        <time datetime="2017-05-12 00:00:00 &#43;0000 UTC" class="catalogue-time">May 12, 2017</time>
+        <h1 class="catalogue-title">Toronto Sound Prints</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            A couple years back I collaborated with Sheraz Khan on a couple of art projects. For a while, we had a portfolio site exhibiting our artworks but that domain recently expired.
+One of the projects we worked on together was called Toronto Sound Prints. I really liked the end product for this project, so here&rsquo;s a sample of what we worked on.
+We worked with Ryerson University’s SMART Lab to create visual interpretations of data they collected that correlated sound data with stress in human subjects.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/" class="catalogue-item">
+    <div>
+        <time datetime="2017-04-25 00:00:00 &#43;0000 UTC" class="catalogue-time">April 25, 2017</time>
+        <h1 class="catalogue-title">Optimizing GIFS with FFMPEG</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            A few months back I was working on an iOS app that delivered GIFs to users. The idea was that someone would visit one of our 3D photo booths, and get an animated avatar created. We could then render animation frames to PNGs using our custom software. The problem was that some of our animations were rather long, so we needed to crunch the gifs down to the smallest possible size.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2015/10/06/video-glitch-art-in-ruby/" class="catalogue-item">
+    <div>
+        <time datetime="2015-10-06 00:00:00 &#43;0000 UTC" class="catalogue-time">October 6, 2015</time>
+        <h1 class="catalogue-title">Video Glitch Art in Ruby</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            This is the text from a talk about my video glitch work on Fido&rsquo;s Mobile Music Video. Credit for making this kind of work so fun goes to UCNV for creating the AviGlitch Gem.
+A few months ago I got to work on a music video with Vice Magazine and Fido. When I tell people about this contract, both developers and artists alike ask “How did you get that job?”
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2015/05/25/kirby-cms/" class="catalogue-item">
+    <div>
+        <time datetime="2015-05-25 00:00:00 &#43;0000 UTC" class="catalogue-time">May 25, 2015</time>
+        <h1 class="catalogue-title">Developing with Kirby</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            A year or so ago, I taught myself PHP by way of WordPress. I didn&rsquo;t consider myself a developer, but I knew how to make things happen. When I learned Ruby on Rails, I was thrilled to realize that I actually understood the basic concepts of programming, and I picked up Ruby really quickly.
+After learning Rails this winter, I was curious to see how much more I understood about PHP now that I had begun to work with Ruby, so I built a new site using Kirby.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2015/03/10/scraping-city-toronto-data/" class="catalogue-item">
+    <div>
+        <time datetime="2015-03-10 00:00:00 &#43;0000 UTC" class="catalogue-time">March 10, 2015</time>
+        <h1 class="catalogue-title">Scraping The City of Toronto&#39;s Council Data</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            I am working with two of my classmates to create an API for the City of Toronto&rsquo;s City Council data. We&rsquo;ve spent a lot of time discussing the idea, and this week we got down to work.
+Why Are We Doing This? A couple weeks back, I was chatting with Matt Elliot about the stories we might find in this data. He had a great example. Checkout the SmartTrack Work Plan from February&rsquo;s meeting.
+        </p>
+    </div>
+</a>
+
+		
+			<a href="https://cassidy.codes/blog/2015/01/26/arrays-vs-hashes-ruby/" class="catalogue-item">
+    <div>
+        <time datetime="2015-01-26 00:00:00 &#43;0000 UTC" class="catalogue-time">January 26, 2015</time>
+        <h1 class="catalogue-title">Arrays vs Hashes in Ruby</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+            This weekend I created a small, Ruby CRM application that stores contact information. You can check out my code on GitHub. While I was building this app, most people were using an array to store their contact information, but I wanted to use a Hash. I kew that theoretically Hashes are fster than Arrays, but I didn&rsquo;t know why.
+Arrays vs Hashes The quick answer is that Hashes in Ruby are more easily accessible than an item in an array.
+        </p>
+    </div>
+</a>
+
+		
+	</div>
+	
+	<div class="pagination">
+		
+		
+	
+		<span>1</span>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-01-05 22:43:27.103338 -0500 EST m=&#43;0.126771597">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

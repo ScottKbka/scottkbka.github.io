@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Optimizing GIFS with FFMPEG &middot; Cassidy K
+		</title>
+	
+		
+ 		<link rel="stylesheet" href="/css/style.css">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Cassidy K" />
+	</head>
+	
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Cassidy K</h2>
+				</a>
+				<ul>
+    <li><a href="https://github.com/cassidycodes">GitHub</a></li>
+    <li><a href="https://twitter.com/cassidycodes">Twitter</a></li>
+</ul>
+
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Cassidy K
+        <br>
+        <span>on&nbsp;</span><time datetime="2017-04-25 00:00:00 &#43;0000 UTC">April 25, 2017</time>
+</div>
+
+		<h1 class="post-title">Optimizing GIFS with FFMPEG</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>A few months back I was working on an iOS app that delivered GIFs to users. The idea was that someone would visit one of our 3D photo booths, and get an animated avatar created. We could then render animation frames to PNGs using our custom software. The problem was that some of our animations were rather long, so we needed to crunch the gifs down to the smallest possible size.</p>
+
+<p>Before I dive in, I want to give big credit to the author of <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">this post about high quality GIFs with FFMPEG</a>. I worked through their notes and dug deeper into FFMPEG docs to get the results here. If you&rsquo;re looking to convert movies to GIFs, check out that article.</p>
+
+<h2 id="tl-dr">TL;DR</h2>
+
+<p>Here is my modified version of the script from the <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">Usage</a> section of the above blog post. What follows in a brief explanation for those who have the patience for digging into FFMPEG.</p>
+
+<pre><code class="language-bash">#!/bin/sh
+
+palette=&quot;/tmp/palette.png&quot;
+
+filters=&quot;fps=15,scale=320:-1:flags=lanczos&quot;
+
+ffmpeg -v warning -i $1 -vf &quot;$filters,palettegen=stats_mode=diff&quot; -y $palette
+
+ffmpeg -i $1 -i $palette -lavfi &quot;$filters,paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle&quot; -y $2
+</code></pre>
+
+<h2 id="filtergraphs">Filtergraphs</h2>
+
+<p>The filter options can get a little confusing. So here&rsquo;s a quick explanation of the Filtergraph Syntax.</p>
+
+<p>The basic values we&rsquo;re passing in with our <code>$filters</code> variable are structured like a nested key-value pairs. If a visual representation helps, we could represent this variable like so:</p>
+
+<pre><code class="language-yaml">fps: 15
+scale:
+  [320, -1]
+  flags: &quot;lanczos&quot;
+</code></pre>
+
+<p>When we add <code>,palettegen</code> on the end, we&rsquo;re just adding one more top level key to the filtergraph.</p>
+
+<p>Things get a little more complex when we generate the GIF. Let&rsquo;s look at everything we pass in to the <code>-lavfi</code> option:</p>
+
+<pre><code class="language-yaml">fps: 15
+scale:
+  [320, -1]
+  flags: &quot;lanczos&quot;
+paletteuse:
+  dither:
+    bayer_scale: 5
+    diff_mode: rectangle
+</code></pre>
+
+<p>You can find a more detailed explanation of this in FFMPEG&rsquo;s <a href="http://www.ffmpeg.org/ffmpeg-filters.html#Filtering-Introduction.">Filtergraph Docs</a></p>
+
+<h2 id="explanation-of-options">Explanation of Options</h2>
+
+<p>I won&rsquo;t go into each option we&rsquo;re passing to FFMPEG here, but there are a couple things that differ from the original blog post.</p>
+
+<ol>
+<li><p>Using <code>stats_mode=diff</code> when generating the palette. This will generate a smaller palette because FFMPEG will only look at the pixels that do not change from one frame to the next. I found that without this, some static pixels would still change colours ever so slightly between frames.</p></li>
+
+<li><p>Dithering with a <code>bayer_scale=5</code>. Have a look a the different options for dithering as they&rsquo;ll each have a different effect depending on your content. In our case, since the images were synthetic (i.e., not photographic), dithering using the Bayer algorithm worked quite nicely.</p></li>
+
+<li><p><code>diff_mode=rectangle</code> restricts area to only the regions where there is motion. This means that the areas without motion will remain the transparent from one frame to the next.</p></li>
+</ol>
+
+<h2 id="the-result">The Result</h2>
+
+<p>For our longer gifs, this method cut our file size down by about 40%. The image below works out to just 166K. We get a little bit of colour banding, but I think that&rsquo;s acceptable.</p>
+
+<p><img src="/img/posts/gif-optimization/final.gif" alt="An animated GIF of my avatar doing a backflip." class="img-fluid mx-auto d-block"></p>
+
+<p>If you want to peak at the internals of a gif, you can use <code>gifsicle -e input.gif</code> to explode the frames. Here&rsquo;s the first three frames of the gif above. Notice that only the pixels that change from one frame to the next are present.</p>
+
+<p><img src="/img/posts/gif-optimization/final.000.gif" alt="An animated GIF of my avatar doing a backflip." class="img-fluid mx-auto d-block">
+<img src="/img/posts/gif-optimization/final.001.gif" alt="An animated GIF of my avatar doing a backflip." class="img-fluid mx-auto d-block">
+<img src="/img/posts/gif-optimization/final.002.gif" alt="An animated GIF of my avatar doing a backflip." class="img-fluid mx-auto d-block"></p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/blog/2015/10/06/video-glitch-art-in-ruby/" class="left arrow">&#8592;</a>
+		<a href="/blog/2017/05/12-toronto-sound-prints/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-01-05 22:43:27.070282 -0500 EST m=&#43;0.093713924">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

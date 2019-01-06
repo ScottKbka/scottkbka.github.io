@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				How to Rewrite git History when Collaborating with Others &middot; Cassidy K
+		</title>
+	
+		
+ 		<link rel="stylesheet" href="/css/style.css">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Cassidy K" />
+	</head>
+	
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Cassidy K</h2>
+				</a>
+				<ul>
+    <li><a href="https://github.com/cassidycodes">GitHub</a></li>
+    <li><a href="https://twitter.com/cassidycodes">Twitter</a></li>
+</ul>
+
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Cassidy K
+        <br>
+        <span>on&nbsp;</span><time datetime="2018-03-22 00:00:00 &#43;0000 UTC">March 22, 2018</time>
+</div>
+
+		<h1 class="post-title">How to Rewrite git History when Collaborating with Others</h1>
+<div class="post-line"></div>
+
+		
+
+		<p>I was recently working on a new node project, and while I was first testing things out, I committed the contents of the dist directory to git. Later on, I was getting the project set up with Docker, and I realized I didn’t want the dist in the repo as it would increase the size of the Docker image.</p>
+
+<p>Removing files from git is a bit tricky. You can add it to the .gitignore, but once git is tracking an object, git will always follow its changes even if it&rsquo;s in the gitignore. I&rsquo;ve kept <a href="https://dalibornasevic.com/posts/2-permanently-remove-files-and-folders-from-a-git-repository">Dalibor Nasevic&rsquo;s post</a> in my bookmarks for situations like this. But to remove the dist from our project, we needed to rewrite history on multiple branches to be sure that the files here would never show up again</p>
+
+<p>Here are the steps we followed to rewrite history on multiple branches:</p>
+
+<p>Checkout master.</p>
+
+<pre><code class="language-shell">git checkout master
+</code></pre>
+
+<p>Add <code>dist/</code> to the <code>.gitignore</code>.</p>
+
+<p>Rewrite history on master to ignore the <code>dist</code> directory. Note that this rewrites the SHA of each commit. Your branch will now look like an entirely different set of commits to git.</p>
+
+<pre><code class="language-shell">git filter-branch --tree-filter 'rm -rf dist' HEAD
+</code></pre>
+
+<p>See if any objects in your repo are pointing to the dist. You should see your branch name in the output here.</p>
+
+<pre><code class="language-shell">git for-each-ref --format='delete %(refname)' refs/original
+</code></pre>
+
+<p>Dereference the objects by expiring the reflog and forcing GC.</p>
+
+<pre><code class="language-shell">git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
+git reflog expire --expire=now --all
+git gc --prune=now
+</code></pre>
+
+<p>Force push the new master branch.</p>
+
+<pre><code class="language-shell">git push origin master --force
+</code></pre>
+
+<p>Now other developers will need to follow similar steps to get their branches up to date. They can checkout their working branch and follow steps above, but stop short of pushing their branches. These steps will remove the <code>dist</code> directory from history for them, but they will rewrite every SHA in the branch&rsquo;s history, so the new master branch and their branch will look different to git. To fix this, we&rsquo;ll cherry pick their commits onto a new branch.</p>
+
+<p>Use this command to find the range of SHAs you want to cherrypick. If you have more than 50 commits in your branch, you can drop the <code>-n 50</code> option. Copy the first and last SHAs of your work.</p>
+
+<pre><code class="language-shell">git log —pretty=oneline —graph —abbrev-commit -n 50
+</code></pre>
+
+<p>Start with the new history</p>
+
+<pre><code class="language-shell">git checkout master
+</code></pre>
+
+<p>And branch off of that</p>
+
+<pre><code class="language-shell">git checkout -b your-branch-new-history
+</code></pre>
+
+<p>And finally cherry-pick your commits onto your new branch</p>
+
+<pre><code class="language-shell">git cherry-pick &lt;starting sha&gt;..&lt;ending sha&gt;
+</code></pre>
+
+<p>You can now remove your original working branch and push your new work up to GitHub. Once you&rsquo;ve fixed all your working branches, you can verify that the <code>dist</code> directory is no longer in your history by listing all files ever tracked by git, including deleted ones:</p>
+
+<pre><code class="language-shell">git log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d' | grep dist
+</code></pre>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/blog/2017/05/12-toronto-sound-prints/" class="left arrow">&#8592;</a>
+		<a href="/blog/2018/04/12/return-raw-data-from-active-record/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-01-05 22:43:27.067756 -0500 EST m=&#43;0.091187855">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

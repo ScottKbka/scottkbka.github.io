@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Video Glitch Art in Ruby &middot; Cassidy K
+		</title>
+	
+		
+ 		<link rel="stylesheet" href="/css/style.css">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Cassidy K" />
+	</head>
+	
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Cassidy K</h2>
+				</a>
+				<ul>
+    <li><a href="https://github.com/cassidycodes">GitHub</a></li>
+    <li><a href="https://twitter.com/cassidycodes">Twitter</a></li>
+</ul>
+
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Cassidy K
+        <br>
+        <span>on&nbsp;</span><time datetime="2015-10-06 00:00:00 &#43;0000 UTC">October 6, 2015</time>
+</div>
+
+		<h1 class="post-title">Video Glitch Art in Ruby</h1>
+<div class="post-line"></div>
+
+		
+
+		<p>This is the text from a talk about my video glitch work on Fido&rsquo;s <a href="http://mobilemusicvideo.ca">Mobile Music Video</a>. Credit for making this kind of work so fun goes to <a href="https://github.com/ucnv/aviglitch">UCNV</a> for creating the AviGlitch Gem.</p>
+
+<hr />
+
+<p>A few months ago I got to work on a music video with Vice Magazine and Fido. When I tell people about this contract, both developers and artists alike ask “How did you get that job?”</p>
+
+<p>I am going to answer the question in two ways. First from an experience stand point—What did I have in my portfolio and what connections did I have to land a cool contract like this?—and then second, from a technical standpoint—what did I do with code? How do you break videos with Ruby? What is Glitch Art?</p>
+
+<p>I came into being a developer from a curiosity about making things with code. I never really thought I’d have a job as a developer, I just wanted to see what I could do.</p>
+
+<p><img class="img-fluid mx-auto d-block" src="/img/posts/video-glitch-art/civic-images-2.jpg" alt="Civic Images"></p>
+
+<p>My very fist application was written in Processing, a Java-based language, and used the now-defunct ProcessingJS to embed it into a WordPress site. Everything I did there is now obsolete since HTML5 is old news now. It’s a little funny to look at now but that was a huge feat for me as my area of study had nothing to do with programming. I taught myself everything for that project.</p>
+
+<p><img class="img-fluid mx-auto d-block" src="/img/posts/video-glitch-art/toronto-sound-prints.jpg" alt="Toronto Sound Prints"></p>
+
+<p>Shortly after that project I started collaborating with an urban planner and we were curated into an exhibit that explored themes of noise. For this project we partnered with a research lab from Ryerson to take data they have about the emotional effects of noise on human subjects and we created glitched photographs and a heat map to represent Toronto’s sonic stress environments. For this project I worked in Processing again as my input and output were data and graphic related.</p>
+
+<p><img class="img-fluid mx-auto d-block" src="/img/posts/video-glitch-art/teto.jpg" alt="TeTo"></p>
+
+<p>Since then I have collaborated on media art projects that have to do with sensory experiences and translating sensory information from one domain to another. This is a picture of a suitcase that makes noise based on the texture of the ground.</p>
+
+<p>Alongside these projects I was learning more about graphic design and taking on web development contracts starting with simple WordPress themes and eventually more complicated applications for corporate clients.</p>
+
+<p>So that’s a quick background on my portfolio. The important part about this, though, is some of the connections I made. When I was curated into the Noise Project, I met artists and designers who work both in the art world and in the creative industry.</p>
+
+<p><img class="img-fluid mx-auto d-block" src="/img/posts/video-glitch-art/pizza.gif" alt="Pizza"></p>
+
+<p>Last Spring I was between contracts and a friend that I know from the art world called me up one night with a question about glitch art and mentioned that this was for a commercial contract. She sent me this sample and a link to some work by <a href="http://ucnv.org/">ucnv</a> an artist who had written a <a href="https://github.com/ucnv/aviglitch">Ruby Gem</a> that opens up AVI files lets you mess with them.</p>
+
+<p>I thought, “Glitch art? I’m not a glitch artist? Am I? Am I even a <em>real</em> developer?” Frankly, even though I had done some glitch-data viz with jpegs, I was skeptical of the phrase “glitch art”. I was also uncertain about stepping outside the domain of web development for a commercial contract. I had no idea what it was going to be like to work with a bunch of video compositors.</p>
+
+<p>But I read the docs on the AviGlitch Gem to see what I could do and sent them a sample the next day. They called me and asked me if I was able to glitch 2,000 videos by the end of next week. I said yes. They asked how much it would cost and I aimed for a number I though would be high. They said start tomorrow.</p>
+
+<p>It took me about a week of creating different types of glitches and to get the effects they wanted. Once I had those I build off of a some work from the Gem’s author to write a command line tool that could have glitched 2,000 videos in an hour if they had a powerful enough computer. No one there knew how to program, so I made it really simple. Put the videos in the input directory and type <code>glitch all</code> in the terminal and you get 11 variations of that movie to choose from.</p>
+
+<p>So here’s a quick overview of what you can do with this Gem. AVI files have two types of frames—or, at least, two that we care about— i-frames and p-frames. i-frames are like jpegs. They’re static. p-frames represent paths. They tell your video player which direction things are moving in.</p>
+
+<p>So the magic behind the AVI Glitch gem is that it puts these frames into an array and lets you ask the frame what kind it is. For most glitches, p-frames are the ones we want because they’re the ones with the motion. i-frames just make things look normal and normal is boring.</p>
+
+<p>Once you have this array of frames you can shuffle them around, repeat them, stack the same frames onto of each other, delete the i-frames or anything else that you can think of doing with an array. You can also access and manipulate some of the frame’s data if you want.</p>
+
+<p>The one trick to these glitches is that the Gem works with AVIs, so the scripts I wrote use ffmpeg to convert files from their current format to and AVI then saves them back in their original format. In this conversion process there are some cool glitches you can make by breaking codec files, but I didn’t get a chance to dig to deep into that for this work.</p>
+
+<p>So here’s an example. There are two parts to this clip. In the first I took out all the i-frames and then looped the clip over top of itself a couple times. This creates that effect where pieces of people’s faces get left behind or the absorbs the colours from another part of the picture because there are no i-frames to reset the position of things.</p>
+
+<p>Just to show you how boring they are, there’s an iframe in the middle of the clip. But then right after that I’ve created a 5 frame loop that gets messy.</p>
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 1.5rem;">
+  <iframe src="https://player.vimeo.com/video/141620297?byline=0&portrait=0" width="600" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
+<p>In code, I can show you what that looks like. This script concatenates video clips with no i-frames between them. The only line we really care about is the on line where we mutate i-frames into p-frames (or key into delta, whichever words you choose). You’ll see that at the top and bottom there are two <code>ffmpeg</code> commands that convert the file.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">begin</span>
+  options <span style="color:#f92672">=</span> <span style="color:#66d9ef">Docopt</span><span style="color:#f92672">::</span>docopt doc
+  mktmpdir(options<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;--debug&#39;</span><span style="color:#f92672">]</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>tmpdir<span style="color:#f92672">|</span>
+    cmd <span style="color:#f92672">=</span> <span style="color:#66d9ef">Cocaine</span><span style="color:#f92672">::</span><span style="color:#66d9ef">CommandLine</span><span style="color:#f92672">.</span>new <span style="color:#e6db74">&#39;ffmpeg&#39;</span>, <span style="color:#e6db74">&#39;-i :infile -c:v libxvid -y -q:v 0 :outfile&#39;</span>
+    avi <span style="color:#f92672">=</span> <span style="color:#66d9ef">nil</span>
+    options<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;&lt;infile&gt;&#39;</span><span style="color:#f92672">].</span>each<span style="color:#f92672">.</span>with_index <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>infile, i<span style="color:#f92672">|</span>
+      avifile <span style="color:#f92672">=</span> tmpdir<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;mpeg4.avi&#39;</span>)
+      cmd<span style="color:#f92672">.</span>run <span style="color:#e6db74">infile</span>: infile, <span style="color:#e6db74">outfile</span>: avifile<span style="color:#f92672">.</span>to_s
+      a <span style="color:#f92672">=</span> <span style="color:#66d9ef">AviGlitch</span><span style="color:#f92672">.</span>open avifile
+      <span style="color:#66d9ef">unless</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+        a<span style="color:#f92672">.</span>glitch <span style="color:#e6db74">:keyframe</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>f<span style="color:#f92672">|</span>
+          <span style="color:#e6db74">&#39;&#39;</span>
+        <span style="color:#66d9ef">end</span>
+      <span style="color:#66d9ef">end</span>
+      a<span style="color:#f92672">.</span>mutate_keyframes_into_deltaframes!
+      <span style="color:#66d9ef">if</span> avi<span style="color:#f92672">.</span>nil?
+        avi <span style="color:#f92672">=</span> a
+      <span style="color:#66d9ef">else</span>
+        avi<span style="color:#f92672">.</span>frames<span style="color:#f92672">.</span>concat a<span style="color:#f92672">.</span>frames
+        a<span style="color:#f92672">.</span>close
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+    glitchfile <span style="color:#f92672">=</span> tmpdir<span style="color:#f92672">.</span>join <span style="color:#e6db74">&#39;glitch.avi&#39;</span>
+    avi<span style="color:#f92672">.</span>output glitchfile
+    cmd <span style="color:#f92672">=</span> <span style="color:#66d9ef">Cocaine</span><span style="color:#f92672">::</span><span style="color:#66d9ef">CommandLine</span><span style="color:#f92672">.</span>new <span style="color:#e6db74">&#39;ffmpeg&#39;</span>, <span style="color:#e6db74">&#39;-i :infile -q:v 0 :outfile&#39;</span>
+    cmd<span style="color:#f92672">.</span>run <span style="color:#e6db74">infile</span>: glitchfile<span style="color:#f92672">.</span>to_s, <span style="color:#e6db74">outfile</span>: options<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;-o&#39;</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">rescue</span> <span style="color:#66d9ef">Docopt</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Exit</span> <span style="color:#f92672">=&gt;</span> e
+  puts e<span style="color:#f92672">.</span>message
+<span style="color:#66d9ef">end</span></code></pre></div>
+
+<p>Here’s what a couple of loops of this looks like. This is the same clip concatenated three times. If you’re out on the internet looking things up, this is also called datamoshing.</p>
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 1.5rem;">
+  <iframe src="https://player.vimeo.com/video/141495756?byline=0&portrait=0" width="600" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
+<p>This melt effect is the one that you see a lot in glitched files. The real work here happens between <code>make_tmp_file</code> and just before the <code>if</code>. It opens the video up, grabs a start point and makes sure that it’s a p-frame then repeats that frame until the end of the file.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">begin</span>
+  options <span style="color:#f92672">=</span> <span style="color:#66d9ef">Docopt</span><span style="color:#f92672">::</span>docopt doc
+  mktmpdir(options<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;--debug&#39;</span><span style="color:#f92672">]</span>) <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>tmpdir<span style="color:#f92672">|</span>
+    infile  <span style="color:#f92672">=</span> options<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;&lt;infile&gt;&#39;</span><span style="color:#f92672">]</span>
+    avifile <span style="color:#f92672">=</span> tmpdir<span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#39;mpeg4.avi&#39;</span>)
+    make_tmp_file infile, avifile
+    avi          <span style="color:#f92672">=</span> <span style="color:#66d9ef">AviGlitch</span><span style="color:#f92672">.</span>open avifile
+    num_frames   <span style="color:#f92672">=</span> avi<span style="color:#f92672">.</span>frames<span style="color:#f92672">.</span>count
+    start        <span style="color:#f92672">=</span> options<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;-s&#39;</span><span style="color:#f92672">].</span>to_i
+    start_at     <span style="color:#f92672">=</span> start <span style="color:#f92672">&lt;</span> num_frames ? start : num_frames<span style="color:#e6db74">/2
+</span><span style="color:#e6db74">    start_at    += 1 if avi.frames[start_at].is_keyframe?
+</span><span style="color:#e6db74">    melted       = avi.frames[start_at, 1] * num_frames
+</span><span style="color:#e6db74">    if !options[&#39;--decap&#39;]
+</span><span style="color:#e6db74">      base   = avi.frames[0..start_at].mutate_keyframes_into_deltaframes!
+</span><span style="color:#e6db74">      melted = base.concat melted
+</span><span style="color:#e6db74">    end
+</span><span style="color:#e6db74">    glitchfile = tmpdir.join &#39;glitch.avi&#39;
+</span><span style="color:#e6db74">    melted.to_avi.output glitchfile
+</span><span style="color:#e6db74">    if options[&#39;--raw&#39;]
+</span><span style="color:#e6db74">      cmd = Cocaine::CommandLine.new &#39;cp&#39;, &#39;:infile :outfile&#39;
+</span><span style="color:#e6db74">    else
+</span><span style="color:#e6db74">      cmd = Cocaine::CommandLine.new &#39;ffmpeg&#39;, &#39;-i :infile   -q:v 0 :outfile&#39;
+</span><span style="color:#e6db74">    end
+</span><span style="color:#e6db74">    cmd.run infile: glitchfile.to_s, outfile: options[&#39;-o&#39;]
+</span><span style="color:#e6db74">  end
+</span><span style="color:#e6db74">rescue Docopt::Exit =&gt; e
+</span><span style="color:#e6db74">  puts e.message
+</span><span style="color:#e6db74">end</span></code></pre></div>
+
+<p>Here’s the result. You’ll notice that the audio cuts out in this one. This is because not every frame is synchronized with the audio file, so when we glitch here we loose the audio.</p>
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 1.5rem;">
+  <iframe src="https://player.vimeo.com/video/141495759?byline=0&portrait=0" width="600" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
+<p>If you wanted to mess with the frame data, you can get a result something like this. In this clip I randomly deleted pieces of data. It gives this sort of heatwave effect because the i-frames suddenly have motion that they didn’t have before.</p>
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 1.5rem;">
+  <iframe src="https://player.vimeo.com/video/141495758?byline=0&portrait=0" width="600" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
+<p>Finally, if you want to get really wild, you can stack effects on top of each other like this one. This gets really cool when you take one totally glitched frame and concatenate it with a frame that has lots of motion. Check it out.</p>
+
+<div class="embed-responsive embed-responsive-16by9" style="margin-bottom: 1.5rem;">
+  <iframe src="https://player.vimeo.com/video/141495760?byline=0&portrait=0" width="600" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/blog/2015/05/25/kirby-cms/" class="left arrow">&#8592;</a>
+		<a href="/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-01-05 22:43:27.10305 -0500 EST m=&#43;0.126482896">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>
