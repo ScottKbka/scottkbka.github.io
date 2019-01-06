@@ -60,44 +60,35 @@
 <h2 id="tl-dr">TL;DR</h2>
 
 <p>Here is my modified version of the script from the <a href="http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html">Usage</a> section of the above blog post. What follows in a brief explanation for those who have the patience for digging into FFMPEG.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/sh
+</span><span style="color:#75715e"></span>
+<span style="color:#111">palette</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;/tmp/palette.png&#34;</span>
 
-<pre><code class="language-bash">#!/bin/sh
+<span style="color:#111">filters</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;fps=15,scale=320:-1:flags=lanczos&#34;</span>
 
-palette=&quot;/tmp/palette.png&quot;
+ffmpeg -v warning -i <span style="color:#111">$1</span> -vf <span style="color:#d88200">&#34;</span><span style="color:#111">$filters</span><span style="color:#d88200">,palettegen=stats_mode=diff&#34;</span> -y <span style="color:#111">$palette</span>
 
-filters=&quot;fps=15,scale=320:-1:flags=lanczos&quot;
-
-ffmpeg -v warning -i $1 -vf &quot;$filters,palettegen=stats_mode=diff&quot; -y $palette
-
-ffmpeg -i $1 -i $palette -lavfi &quot;$filters,paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle&quot; -y $2
-</code></pre>
-
+ffmpeg -i <span style="color:#111">$1</span> -i <span style="color:#111">$palette</span> -lavfi <span style="color:#d88200">&#34;</span><span style="color:#111">$filters</span><span style="color:#d88200">,paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle&#34;</span> -y <span style="color:#111">$2</span></code></pre></div>
 <h2 id="filtergraphs">Filtergraphs</h2>
 
 <p>The filter options can get a little confusing. So here&rsquo;s a quick explanation of the Filtergraph Syntax.</p>
 
 <p>The basic values we&rsquo;re passing in with our <code>$filters</code> variable are structured like a nested key-value pairs. If a visual representation helps, we could represent this variable like so:</p>
-
-<pre><code class="language-yaml">fps: 15
-scale:
-  [320, -1]
-  flags: &quot;lanczos&quot;
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">fps<span style="color:#111">:</span> <span style="color:#ae81ff">15</span>
+scale<span style="color:#111">:</span>
+  <span style="color:#111">[</span><span style="color:#ae81ff">320</span><span style="color:#111">,</span> -<span style="color:#ae81ff">1</span><span style="color:#111">]</span>
+  flags<span style="color:#111">:</span> <span style="color:#d88200">&#34;lanczos&#34;</span></code></pre></div>
 <p>When we add <code>,palettegen</code> on the end, we&rsquo;re just adding one more top level key to the filtergraph.</p>
 
 <p>Things get a little more complex when we generate the GIF. Let&rsquo;s look at everything we pass in to the <code>-lavfi</code> option:</p>
-
-<pre><code class="language-yaml">fps: 15
-scale:
-  [320, -1]
-  flags: &quot;lanczos&quot;
-paletteuse:
-  dither:
-    bayer_scale: 5
-    diff_mode: rectangle
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">fps<span style="color:#111">:</span> <span style="color:#ae81ff">15</span>
+scale<span style="color:#111">:</span>
+  <span style="color:#111">[</span><span style="color:#ae81ff">320</span><span style="color:#111">,</span> -<span style="color:#ae81ff">1</span><span style="color:#111">]</span>
+  flags<span style="color:#111">:</span> <span style="color:#d88200">&#34;lanczos&#34;</span>
+paletteuse<span style="color:#111">:</span>
+  dither<span style="color:#111">:</span>
+    bayer_scale<span style="color:#111">:</span> <span style="color:#ae81ff">5</span>
+    diff_mode<span style="color:#111">:</span> rectangle</code></pre></div>
 <p>You can find a more detailed explanation of this in FFMPEG&rsquo;s <a href="http://www.ffmpeg.org/ffmpeg-filters.html#Filtering-Introduction.">Filtergraph Docs</a></p>
 
 <h2 id="explanation-of-options">Explanation of Options</h2>
@@ -139,7 +130,7 @@ paletteuse:
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-01-05 22:43:27.070282 -0500 EST m=&#43;0.093713924">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-01-06 09:20:04.252683 -0500 EST m=&#43;0.133562248">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

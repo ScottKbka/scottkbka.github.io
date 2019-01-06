@@ -58,61 +58,31 @@
 <p>Here are the steps we followed to rewrite history on multiple branches:</p>
 
 <p>Checkout master.</p>
-
-<pre><code class="language-shell">git checkout master
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git checkout master</code></pre></div>
 <p>Add <code>dist/</code> to the <code>.gitignore</code>.</p>
 
 <p>Rewrite history on master to ignore the <code>dist</code> directory. Note that this rewrites the SHA of each commit. Your branch will now look like an entirely different set of commits to git.</p>
-
-<pre><code class="language-shell">git filter-branch --tree-filter 'rm -rf dist' HEAD
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git filter-branch --tree-filter <span style="color:#d88200">&#39;rm -rf dist&#39;</span> HEAD</code></pre></div>
 <p>See if any objects in your repo are pointing to the dist. You should see your branch name in the output here.</p>
-
-<pre><code class="language-shell">git for-each-ref --format='delete %(refname)' refs/original
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git <span style="color:#00a8c8">for</span>-each-ref --format<span style="color:#f92672">=</span><span style="color:#d88200">&#39;delete %(refname)&#39;</span> refs/original</code></pre></div>
 <p>Dereference the objects by expiring the reflog and forcing GC.</p>
-
-<pre><code class="language-shell">git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
-git reflog expire --expire=now --all
-git gc --prune=now
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git <span style="color:#00a8c8">for</span>-each-ref --format<span style="color:#f92672">=</span><span style="color:#d88200">&#39;delete %(refname)&#39;</span> refs/original <span style="color:#111">|</span> git update-ref --stdin
+git reflog expire --expire<span style="color:#f92672">=</span>now --all
+git gc --prune<span style="color:#f92672">=</span>now</code></pre></div>
 <p>Force push the new master branch.</p>
-
-<pre><code class="language-shell">git push origin master --force
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git push origin master --force</code></pre></div>
 <p>Now other developers will need to follow similar steps to get their branches up to date. They can checkout their working branch and follow steps above, but stop short of pushing their branches. These steps will remove the <code>dist</code> directory from history for them, but they will rewrite every SHA in the branch&rsquo;s history, so the new master branch and their branch will look different to git. To fix this, we&rsquo;ll cherry pick their commits onto a new branch.</p>
 
 <p>Use this command to find the range of SHAs you want to cherrypick. If you have more than 50 commits in your branch, you can drop the <code>-n 50</code> option. Copy the first and last SHAs of your work.</p>
-
-<pre><code class="language-shell">git log —pretty=oneline —graph —abbrev-commit -n 50
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git log —pretty<span style="color:#f92672">=</span>oneline —graph —abbrev-commit -n <span style="color:#ae81ff">50</span></code></pre></div>
 <p>Start with the new history</p>
-
-<pre><code class="language-shell">git checkout master
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git checkout master</code></pre></div>
 <p>And branch off of that</p>
-
-<pre><code class="language-shell">git checkout -b your-branch-new-history
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git checkout -b your-branch-new-history</code></pre></div>
 <p>And finally cherry-pick your commits onto your new branch</p>
-
-<pre><code class="language-shell">git cherry-pick &lt;starting sha&gt;..&lt;ending sha&gt;
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git cherry-pick &lt;starting sha&gt;..&lt;ending sha&gt;</code></pre></div>
 <p>You can now remove your original working branch and push your new work up to GitHub. Once you&rsquo;ve fixed all your working branches, you can verify that the <code>dist</code> directory is no longer in your history by listing all files ever tracked by git, including deleted ones:</p>
-
-<pre><code class="language-shell">git log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d' | grep dist
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git log --pretty<span style="color:#f92672">=</span>format: --name-only --diff-filter<span style="color:#f92672">=</span>A <span style="color:#111">|</span> sort - <span style="color:#111">|</span> sed <span style="color:#d88200">&#39;/^$/d&#39;</span> <span style="color:#111">|</span> grep dist</code></pre></div>
 
 		
 	</div>
@@ -128,7 +98,7 @@ git gc --prune=now
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-01-05 22:43:27.067756 -0500 EST m=&#43;0.091187855">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-01-06 09:20:04.251135 -0500 EST m=&#43;0.132013999">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

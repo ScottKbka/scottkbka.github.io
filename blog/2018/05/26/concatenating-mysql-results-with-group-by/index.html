@@ -96,20 +96,17 @@
 <h2 id="starting-query">Starting Query</h2>
 
 <p>Let&rsquo;s start by retrieving a join table of our posts and tags. We&rsquo;ll limit this to one post to keep our tables small for this example.</p>
-
-<pre><code class="language-sql">SELECT post.id,
-       post.title,
-       tag.id          AS tag_id,
-       tag.name        AS tag_name,
-       tag.description AS tag_description
-FROM   posts post
-       INNER JOIN posts_tags pt
-               ON pt.post_id = post.id
-       INNER JOIN tags tag
-               ON tag.id = pt.tag_id
-LIMIT  1;
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span><span style="color:#111">,</span>
+       <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">title</span><span style="color:#111">,</span>
+       <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">id</span>          <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_id</span><span style="color:#111">,</span>
+       <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">name</span>        <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_name</span><span style="color:#111">,</span>
+       <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">description</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_description</span>
+<span style="color:#00a8c8">FROM</span>   <span style="color:#111">posts</span> <span style="color:#111">post</span>
+       <span style="color:#00a8c8">INNER</span> <span style="color:#00a8c8">JOIN</span> <span style="color:#111">posts_tags</span> <span style="color:#111">pt</span>
+               <span style="color:#00a8c8">ON</span> <span style="color:#111">pt</span><span style="color:#111">.</span><span style="color:#111">post_id</span> <span style="color:#f92672">=</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span>
+       <span style="color:#00a8c8">INNER</span> <span style="color:#00a8c8">JOIN</span> <span style="color:#111">tags</span> <span style="color:#111">tag</span>
+               <span style="color:#00a8c8">ON</span> <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">pt</span><span style="color:#111">.</span><span style="color:#111">tag_id</span>
+<span style="color:#00a8c8">LIMIT</span>  <span style="color:#ae81ff">1</span><span style="color:#111">;</span></code></pre></div>
 <pre><code>id | title                       | tag_id | tag_name | tag_description
 ---|-----------------------------|--------|----------|-----------------
 1  | Blogging about dogs is fun! | 1      | dogs     | Posts about dogs
@@ -126,21 +123,18 @@ LIMIT  1;
 <h2 id="group-concat">Group_concat</h2>
 
 <p>We can use the <code>Group_concat</code> function to concatenate data from multiple rows when we use <code>GROUP BY</code>:</p>
-
-<pre><code class="language-sql">SELECT post.id,
-       post.title,
-       Group_concat(tag.id) AS tag_ids,
-       tag.name             AS tag_name,
-       tag.description      AS tag_description
-FROM   posts post
-       INNER JOIN posts_tags pt
-               ON pt.post_id = post.id
-       INNER JOIN tags tag
-               ON tag.id = pt.tag_id
-GROUP  BY post.id
-LIMIT  1;  
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span><span style="color:#111">,</span>
+       <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">title</span><span style="color:#111">,</span>
+       <span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_ids</span><span style="color:#111">,</span>
+       <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">name</span>             <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_name</span><span style="color:#111">,</span>
+       <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">description</span>      <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_description</span>
+<span style="color:#00a8c8">FROM</span>   <span style="color:#111">posts</span> <span style="color:#111">post</span>
+       <span style="color:#00a8c8">INNER</span> <span style="color:#00a8c8">JOIN</span> <span style="color:#111">posts_tags</span> <span style="color:#111">pt</span>
+               <span style="color:#00a8c8">ON</span> <span style="color:#111">pt</span><span style="color:#111">.</span><span style="color:#111">post_id</span> <span style="color:#f92672">=</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span>
+       <span style="color:#00a8c8">INNER</span> <span style="color:#00a8c8">JOIN</span> <span style="color:#111">tags</span> <span style="color:#111">tag</span>
+               <span style="color:#00a8c8">ON</span> <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">pt</span><span style="color:#111">.</span><span style="color:#111">tag_id</span>
+<span style="color:#00a8c8">GROUP</span>  <span style="color:#00a8c8">BY</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span>
+<span style="color:#00a8c8">LIMIT</span>  <span style="color:#ae81ff">1</span><span style="color:#111">;</span>  </code></pre></div>
 <pre><code>id | title                       | tag_ids | tag_name | tag_description
 ---|-----------------------------|---------|----------|-----------------
 1  | Blogging about dogs is fun! | 1, 2    | dogs     | Posts about dogs
@@ -155,43 +149,31 @@ LIMIT  1;
 <p>We know that <code>Group_concat</code> gives us a string, so if we look under String Functions in the MySQL docs, we&rsquo;ll find <a href="https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat-ws"><code>Concat_ws</code></a>. <code>Concat_ws</code> lets us concatenate two or more strings with a separator between them. The separator is a comma by default, but for legibility, we want a space too, so let&rsquo;s use the <code>SEPARATOR</code> option. Here are our steps:</p>
 
 <p>Concatenate the tag name:</p>
-
-<pre><code class="language-sql">Group_concat(tag.name SEPARATOR &quot;, &quot;)
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">name</span> <span style="color:#111">SEPARATOR</span> <span style="color:#d88200">&#34;, &#34;</span><span style="color:#111">)</span></code></pre></div>
 <p>Concatenate the tag description:</p>
-
-<pre><code class="language-sql">Group_concat(tag.description SEPARATOR &quot;, &quot;)
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">description</span> <span style="color:#111">SEPARATOR</span> <span style="color:#d88200">&#34;, &#34;</span><span style="color:#111">)</span></code></pre></div>
 <p>And concatenate both of those!</p>
-
-<pre><code class="language-sql">Concat_ws(
-  &quot;, &quot;
-  Group_concat(tag.name SEPARATOR &quot;, &quot;),
-  Group_concat(tag.description SEPARATOR &quot;, &quot;)
-)
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#111">Concat_ws</span><span style="color:#111">(</span>
+  <span style="color:#d88200">&#34;, &#34;</span>
+  <span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">name</span> <span style="color:#111">SEPARATOR</span> <span style="color:#d88200">&#34;, &#34;</span><span style="color:#111">),</span>
+  <span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">description</span> <span style="color:#111">SEPARATOR</span> <span style="color:#d88200">&#34;, &#34;</span><span style="color:#111">)</span>
+<span style="color:#111">)</span></code></pre></div>
 <h3 id="putting-it-all-together">Putting it all together</h3>
-
-<pre><code class="language-sql">SELECT post.id,
-       post.title,
-       Group_concat(tag.id) AS tag_ids,
-       Concat_ws(
-         &quot;, &quot;
-         Group_concat(tag.name SEPARATOR &quot;, &quot;),
-         Group_concat(tag.description SEPARATOR &quot;, &quot;)
-       )                    AS tag_names_descriptions
-FROM   posts post
-       INNER JOIN posts_tags pt
-               ON pt.post_id = post.id
-       INNER JOIN tags tag
-               ON tag.id = pt.tag_id
-GROUP  BY post.id
-LIMIT  1;
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#00a8c8">SELECT</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span><span style="color:#111">,</span>
+       <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">title</span><span style="color:#111">,</span>
+       <span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">id</span><span style="color:#111">)</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_ids</span><span style="color:#111">,</span>
+       <span style="color:#111">Concat_ws</span><span style="color:#111">(</span>
+         <span style="color:#d88200">&#34;, &#34;</span>
+         <span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">name</span> <span style="color:#111">SEPARATOR</span> <span style="color:#d88200">&#34;, &#34;</span><span style="color:#111">),</span>
+         <span style="color:#111">Group_concat</span><span style="color:#111">(</span><span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">description</span> <span style="color:#111">SEPARATOR</span> <span style="color:#d88200">&#34;, &#34;</span><span style="color:#111">)</span>
+       <span style="color:#111">)</span>                    <span style="color:#00a8c8">AS</span> <span style="color:#111">tag_names_descriptions</span>
+<span style="color:#00a8c8">FROM</span>   <span style="color:#111">posts</span> <span style="color:#111">post</span>
+       <span style="color:#00a8c8">INNER</span> <span style="color:#00a8c8">JOIN</span> <span style="color:#111">posts_tags</span> <span style="color:#111">pt</span>
+               <span style="color:#00a8c8">ON</span> <span style="color:#111">pt</span><span style="color:#111">.</span><span style="color:#111">post_id</span> <span style="color:#f92672">=</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span>
+       <span style="color:#00a8c8">INNER</span> <span style="color:#00a8c8">JOIN</span> <span style="color:#111">tags</span> <span style="color:#111">tag</span>
+               <span style="color:#00a8c8">ON</span> <span style="color:#111">tag</span><span style="color:#111">.</span><span style="color:#111">id</span> <span style="color:#f92672">=</span> <span style="color:#111">pt</span><span style="color:#111">.</span><span style="color:#111">tag_id</span>
+<span style="color:#00a8c8">GROUP</span>  <span style="color:#00a8c8">BY</span> <span style="color:#111">post</span><span style="color:#111">.</span><span style="color:#111">id</span>
+<span style="color:#00a8c8">LIMIT</span>  <span style="color:#ae81ff">1</span><span style="color:#111">;</span></code></pre></div>
 <pre><code>id | title                       | tag_ids | tag_name | tag_descriptions
 ---|-----------------------------|---------|----------|-------------------------------
 1  | Blogging about dogs is fun! | 1, 2    | dogs, cute, Posts about dogs, Cute things
@@ -217,7 +199,7 @@ LIMIT  1;
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-01-05 22:43:27.067735 -0500 EST m=&#43;0.091166602">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-01-06 09:20:04.251186 -0500 EST m=&#43;0.132065167">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

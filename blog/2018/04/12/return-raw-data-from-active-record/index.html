@@ -63,10 +63,12 @@
 
 <p><strong>users</strong></p>
 
-<p>id | name
-1 | Sonja Sis
-2 | Nicol Hollinghead
-3 | Edison Huseman</p>
+<pre><code>id | name
+---|------------------
+1  | Sonja Sis
+2  | Nicol Hollinghead
+3  | Edison Huseman
+</code></pre>
 
 <p><strong>posts</strong></p>
 
@@ -77,88 +79,77 @@
 
 <p><strong>comments</strong></p>
 
-<p>id|body|user_id|post_id
-1 | Me too! | 3 | 2
-2 | They are not! | 1 | 2
-3 | You make a good point. | 2 | 1</p>
+<pre><code>id | body          | user_id | post_id
+---|---------------|---------|--------
+1  | Me too!       | 3       | 2
+2  | They are not! | 1       | 2
+</code></pre>
 
 <p>Now lets say we want to know how many comments each post has received in the last 90 days, 30 days, and 15 days. We&rsquo;re looking for a data structure like this in the end:</p>
-
-<pre><code class="language-ruby">{ 1 =&gt; { ninety_days:  190,
-         thirty_days:  67,
-         fifteen_days: 14 },
-  2 =&gt; { ninety_days:  583,
-         thirty_days:  392,
-         fifteen_days: 83 } }
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">{</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span> <span style="color:#d88200">ninety_days</span><span style="color:#111">:</span>  <span style="color:#ae81ff">190</span><span style="color:#111">,</span>
+         <span style="color:#d88200">thirty_days</span><span style="color:#111">:</span>  <span style="color:#ae81ff">67</span><span style="color:#111">,</span>
+         <span style="color:#d88200">fifteen_days</span><span style="color:#111">:</span> <span style="color:#ae81ff">14</span> <span style="color:#111">},</span>
+  <span style="color:#ae81ff">2</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">{</span> <span style="color:#d88200">ninety_days</span><span style="color:#111">:</span>  <span style="color:#ae81ff">583</span><span style="color:#111">,</span>
+         <span style="color:#d88200">thirty_days</span><span style="color:#111">:</span>  <span style="color:#ae81ff">392</span><span style="color:#111">,</span>
+         <span style="color:#d88200">fifteen_days</span><span style="color:#111">:</span> <span style="color:#ae81ff">83</span> <span style="color:#111">}</span> <span style="color:#111">}</span></code></pre></div>
 <p>We could try something like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">class</span> <span style="color:#75af00">Post</span> <span style="color:#f92672">&lt;</span> <span style="color:#00a8c8">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Base</span>
+  <span style="color:#111">scope</span> <span style="color:#d88200">:between</span><span style="color:#111">,</span> <span style="color:#111">(</span><span style="color:#111">range</span><span style="color:#111">)</span><span style="color:#f92672">-&gt;</span> <span style="color:#111">{</span> <span style="color:#111">where</span><span style="color:#111">(</span><span style="color:#d88200">created_at</span><span style="color:#111">:</span> <span style="color:#111">range</span> <span style="color:#111">}</span>
+<span style="color:#00a8c8">end</span>
 
-<pre><code class="language-ruby">class Post &lt; ActiveRecord::Base
-  scope :between, (range)-&gt; { where(created_at: range }
-end
+<span style="color:#00a8c8">class</span> <span style="color:#75af00">MyPostSummary</span>
+  <span style="color:#00a8c8">def</span> <span style="color:#75af00">self</span><span style="color:#f92672">.</span><span style="color:#75af00">summarize</span>
+    <span style="color:#00a8c8">Post</span><span style="color:#f92672">.</span><span style="color:#111">find_each</span><span style="color:#f92672">.</span><span style="color:#111">with_object</span><span style="color:#111">({})</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">post</span><span style="color:#111">,</span> <span style="color:#111">h</span><span style="color:#f92672">|</span>
+      <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#d88200">:post_id</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#111">{}</span>
+      <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#f92672">][</span><span style="color:#d88200">:ninety_days</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span>
+        <span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">comments</span><span style="color:#f92672">.</span><span style="color:#111">between</span><span style="color:#111">(</span><span style="color:#ae81ff">90</span><span style="color:#f92672">.</span><span style="color:#111">days</span><span style="color:#f92672">.</span><span style="color:#111">ago</span><span style="color:#f92672">..</span><span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#111">days</span><span style="color:#f92672">.</span><span style="color:#111">ago</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">count</span>
+      <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#f92672">][</span><span style="color:#d88200">:thirty_days</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span>
+        <span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">comments</span><span style="color:#f92672">.</span><span style="color:#111">between</span><span style="color:#111">(</span><span style="color:#ae81ff">30</span><span style="color:#f92672">.</span><span style="color:#111">days</span><span style="color:#f92672">.</span><span style="color:#111">ago</span><span style="color:#f92672">..</span><span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#111">days</span><span style="color:#f92672">.</span><span style="color:#111">ago</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">count</span>
+      <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#d88200">:post_id</span><span style="color:#f92672">][</span><span style="color:#d88200">:fifteen_days</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span>
+        <span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">comments</span><span style="color:#f92672">.</span><span style="color:#111">between</span><span style="color:#111">(</span><span style="color:#ae81ff">15</span><span style="color:#f92672">.</span><span style="color:#111">days</span><span style="color:#f92672">.</span><span style="color:#111">ago</span><span style="color:#f92672">..</span><span style="color:#ae81ff">0</span><span style="color:#f92672">.</span><span style="color:#111">days</span><span style="color:#f92672">.</span><span style="color:#111">ago</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">count</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">end</span>
 
-class MyPostSummary
-  def self.summarize
-    Post.find_each.with_object({}) do |post, h|
-      h[:post_id] = {}
-      h[post.id][:ninety_days] =
-        post.comments.between(90.days.ago..0.days.ago).count
-      h[post.id][:thirty_days] =
-        post.comments.between(30.days.ago..0.days.ago).count
-      h[:post_id][:fifteen_days] =
-        post.comments.between(15.days.ago..0.days.ago).count
-  end
-end
+<span style="color:#00a8c8">MyPostSummary</span><span style="color:#f92672">.</span><span style="color:#111">summarize</span>
 
-MyPostSummary.summarize
-
-# { 1 =&gt; { ninety_days: 190,
-#         thirty_days:  67,
-#         fifteen_days: 14 },
-#  2 =&gt; { ninety_days:  583,
-#         thirty_days:  392,
-#         fifteen_days: 83 } }
-</code></pre>
-
+<span style="color:#75715e"># { 1 =&gt; { ninety_days: 190,</span>
+<span style="color:#75715e">#         thirty_days:  67,</span>
+<span style="color:#75715e">#         fifteen_days: 14 },</span>
+<span style="color:#75715e">#  2 =&gt; { ninety_days:  583,</span>
+<span style="color:#75715e">#         thirty_days:  392,</span>
+<span style="color:#75715e">#         fifteen_days: 83 } }</span></code></pre></div>
 <p>Pretty repetitive, right? If we’re building a summary of all of our the posts in our blog, we&rsquo;re going to be doing a lot of unnecessary counting!</p>
 
 <h2 id="using-select">Using <code>select</code></h2>
 
 <p>When I first tackled this problem, I thought, “Hmmm, maybe I can use ActiveRecord&rsquo;s <code>select</code> to select a count for each period.” This does wonders for saving database queries! I’ll leave out the rest of the class here for brevity. Here’s what that query looks like:</p>
-
-<pre><code class="language-ruby"># Use SQL to count the comments for each post.
-select = &lt;&lt;~SQL
-           posts.id,
-           Count(IF(comments.created_at &gt;
-                    DATE_SUB(CURRENT_TIMESTAMP, 90 DAY),
-                    comments.id,
-                    NULL)) AS ninety_days,
-           Count(IF(DATE_SUB(CURRENT_TIMESTAMP, 30 DAY),
-                    comments.id,
-                    NULL)) AS thirty_days,
-           Count(IF(DATE_SUB(CURRENT_TIMESTAMP, 15 DAY),
-                    comments.id,
-                    NULL)) AS fifteen_days
-         SQL
-</code></pre>
-
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Use SQL to count the comments for each post.</span>
+<span style="color:#111">select</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;&lt;~</span><span style="color:#00a8c8">SQL</span>
+           <span style="color:#111">posts</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span>
+           <span style="color:#00a8c8">Count</span><span style="color:#111">(</span><span style="color:#00a8c8">IF</span><span style="color:#111">(</span><span style="color:#111">comments</span><span style="color:#f92672">.</span><span style="color:#111">created_at</span> <span style="color:#f92672">&gt;</span>
+                    <span style="color:#00a8c8">DATE_SUB</span><span style="color:#111">(</span><span style="color:#00a8c8">CURRENT_TIMESTAMP</span><span style="color:#111">,</span> <span style="color:#ae81ff">90</span> <span style="color:#00a8c8">DAY</span><span style="color:#111">),</span>
+                    <span style="color:#111">comments</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span>
+                    <span style="color:#00a8c8">NULL</span><span style="color:#111">))</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">ninety_days</span><span style="color:#111">,</span>
+           <span style="color:#00a8c8">Count</span><span style="color:#111">(</span><span style="color:#00a8c8">IF</span><span style="color:#111">(</span><span style="color:#00a8c8">DATE_SUB</span><span style="color:#111">(</span><span style="color:#00a8c8">CURRENT_TIMESTAMP</span><span style="color:#111">,</span> <span style="color:#ae81ff">30</span> <span style="color:#00a8c8">DAY</span><span style="color:#111">),</span>
+                    <span style="color:#111">comments</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span>
+                    <span style="color:#00a8c8">NULL</span><span style="color:#111">))</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">thirty_days</span><span style="color:#111">,</span>
+           <span style="color:#00a8c8">Count</span><span style="color:#111">(</span><span style="color:#00a8c8">IF</span><span style="color:#111">(</span><span style="color:#00a8c8">DATE_SUB</span><span style="color:#111">(</span><span style="color:#00a8c8">CURRENT_TIMESTAMP</span><span style="color:#111">,</span> <span style="color:#ae81ff">15</span> <span style="color:#00a8c8">DAY</span><span style="color:#111">),</span>
+                    <span style="color:#111">comments</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#111">,</span>
+                    <span style="color:#00a8c8">NULL</span><span style="color:#111">))</span> <span style="color:#00a8c8">AS</span> <span style="color:#111">fifteen_days</span>
+         <span style="color:#00a8c8">SQL</span></code></pre></div>
 <p>We need a <code>LEFT OUTER JOIN</code> here because we want to be sure we get posts back even if they have 0 comments.</p>
 
 <p>Also note the <code>group</code> here. Without this, we&rsquo;d get 1 post record back for each comment and we&rsquo;d end up with duplicates because posts have many comments!</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">posts</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Post</span><span style="color:#f92672">.</span><span style="color:#111">left_outer_joins</span><span style="color:#111">(</span><span style="color:#d88200">:comments</span><span style="color:#111">)</span>
+            <span style="color:#f92672">.</span><span style="color:#111">select</span><span style="color:#111">(</span><span style="color:#111">select</span><span style="color:#111">)</span>
+            <span style="color:#f92672">.</span><span style="color:#111">group</span><span style="color:#111">(</span><span style="color:#d88200">&#34;posts.id&#34;</span><span style="color:#111">)</span>
 
-<pre><code class="language-ruby">posts = Post.left_outer_joins(:comments)
-            .select(select)
-            .group(&quot;posts.id&quot;)
-
-posts.find_each.with_object({}) do |post, h|
-  h[:post_id] = {}
-  h[post.id][:ninety_days]  = post.ninety_days
-  h[post.id][:thirty_days]  = post.thirty_days
-  h[post.id][:fifteen_days] = post.fifteen_days
-end
-</code></pre>
-
+<span style="color:#111">posts</span><span style="color:#f92672">.</span><span style="color:#111">find_each</span><span style="color:#f92672">.</span><span style="color:#111">with_object</span><span style="color:#111">({})</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">post</span><span style="color:#111">,</span> <span style="color:#111">h</span><span style="color:#f92672">|</span>
+  <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#d88200">:post_id</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#111">{}</span>
+  <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#f92672">][</span><span style="color:#d88200">:ninety_days</span><span style="color:#f92672">]</span>  <span style="color:#f92672">=</span> <span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">ninety_days</span>
+  <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#f92672">][</span><span style="color:#d88200">:thirty_days</span><span style="color:#f92672">]</span>  <span style="color:#f92672">=</span> <span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">thirty_days</span>
+  <span style="color:#111">h</span><span style="color:#f92672">[</span><span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">id</span><span style="color:#f92672">][</span><span style="color:#d88200">:fifteen_days</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#111">post</span><span style="color:#f92672">.</span><span style="color:#111">fifteen_days</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 <p>Ok, great! We’ve solved the problem of counting the going back to the database to count the comments. Now we just do one query that returns a count for us.</p>
 
 <p>Did you know that when you add <code>SELECT … AS my_select</code>, ActiveRecord will add a method for that attribute to the object returned? That’s why <code>post.ninety_days</code> works in the code above.  I thought that was pretty handy.</p>
@@ -168,27 +159,24 @@ end
 <h2 id="exec-query-to-the-rescue"><code>exec_query</code> to the rescue!</h2>
 
 <p><code>exec_query</code> returns a hash of the column names and values you asked for. This lets you skip active record entirely!</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">query</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Post</span><span style="color:#f92672">.</span><span style="color:#111">left_outer_joins</span><span style="color:#111">(</span><span style="color:#d88200">:comments</span><span style="color:#111">)</span>
+            <span style="color:#f92672">.</span><span style="color:#111">select</span><span style="color:#111">(</span><span style="color:#111">select</span><span style="color:#111">)</span>
+            <span style="color:#f92672">.</span><span style="color:#111">group</span><span style="color:#111">(</span><span style="color:#d88200">&#34;posts.id&#34;</span><span style="color:#111">)</span>
+            <span style="color:#f92672">.</span><span style="color:#111">to_sql</span>
+<span style="color:#111">result</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Post</span><span style="color:#f92672">.</span><span style="color:#111">connection</span><span style="color:#f92672">.</span><span style="color:#111">exec_query</span><span style="color:#111">(</span><span style="color:#111">query</span><span style="color:#111">)</span>
+<span style="color:#75715e"># =&gt; [{ &#34;id&#34;           =&gt; 1,</span>
+<span style="color:#75715e">#       &#34;ninety_days&#34;  =&gt; 190,</span>
+<span style="color:#75715e">#       &#34;thirty_days&#34;  =&gt; 67,</span>
+<span style="color:#75715e">#       &#34;fifteen_days&#34; =&gt; 14 }...]</span>
 
-<pre><code class="language-ruby">query = Post.left_outer_joins(:comments)
-            .select(select)
-            .group(&quot;posts.id&quot;)
-            .to_sql
-result = Post.connection.exec_query(query)
-# =&gt; [{ &quot;id&quot;           =&gt; 1,
-#       &quot;ninety_days&quot;  =&gt; 190,
-#       &quot;thirty_days&quot;  =&gt; 67,
-#       &quot;fifteen_days&quot; =&gt; 14 }...]
-
-result.map!(&amp;symbolize_keys!).group_by(&amp;:id)
-# =&gt;
-# { 1 =&gt; { ninety_days: 190,
-#         thirty_days:  67,
-#         fifteen_days: 14 },
-#  2 =&gt; { ninety_days:  583,
-#         thirty_days:  392,
-#         fifteen_days: 83 }
-</code></pre>
-
+<span style="color:#111">result</span><span style="color:#f92672">.</span><span style="color:#111">map!</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#111">symbolize_keys!</span><span style="color:#111">)</span><span style="color:#f92672">.</span><span style="color:#111">group_by</span><span style="color:#111">(</span><span style="color:#f92672">&amp;</span><span style="color:#d88200">:id</span><span style="color:#111">)</span>
+<span style="color:#75715e"># =&gt;</span>
+<span style="color:#75715e"># { 1 =&gt; { ninety_days: 190,</span>
+<span style="color:#75715e">#         thirty_days:  67,</span>
+<span style="color:#75715e">#         fifteen_days: 14 },</span>
+<span style="color:#75715e">#  2 =&gt; { ninety_days:  583,</span>
+<span style="color:#75715e">#         thirty_days:  392,</span>
+<span style="color:#75715e">#         fifteen_days: 83 }</span></code></pre></div>
 <p>Yay! We got the same result and look at how little code it is! If you’re querying a big dataset, this will save to all kinds of time!</p>
 
 <h2 id="wrapping-up">Wrapping Up</h2>
@@ -214,7 +202,7 @@ result.map!(&amp;symbolize_keys!).group_by(&amp;:id)
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-01-05 22:43:27.068216 -0500 EST m=&#43;0.091648586">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-01-06 09:20:04.252371 -0500 EST m=&#43;0.133249534">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
