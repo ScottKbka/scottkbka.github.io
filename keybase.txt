@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/cassidyk
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://cassidy.codes
+  * I am cassidyk (https://keybase.io/cassidyk) on keybase.
+  * I have a public key with fingerprint D7A9 1426 A08D 2AB6 768A  38D1 C4AD FFDE 66FD BE0C
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01014d5923f83a97bba1a03b69e401f4f351e9dd680d92f2115242ba222b3b3254ff0a",
+      "fingerprint": "d7a91426a08d2ab6768a38d1c4adffde66fdbe0c",
+      "host": "keybase.io",
+      "key_id": "c4adffde66fdbe0c",
+      "kid": "01014d5923f83a97bba1a03b69e401f4f351e9dd680d92f2115242ba222b3b3254ff0a",
+      "uid": "b5b85773936f5980094bde881a5c5319",
+      "username": "cassidyk"
+    },
+    "service": {
+      "hostname": "cassidy.codes",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1552916504,
+  "expire_in": 157680000,
+  "prev": "3beaf75b23aa4b124beae43db2b3991b2a62f2a661a73925c3d5509c9e756eb8",
+  "seqno": 18,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.1.0
+Comment: https://keybase.io/crypto
+
+yMIgAnicrVJbSBVBGD6WGR5LQijUhGKT6GKyM7uzZ/cQFgjdUJIuFiKcZnZmdb3s
+rmf3eDqIlWVYEEj3pMjCKBMrgqB7VEYklhUIVgiCD0KYFGYPQlGzUg9Bj83L8P/z
+fd98/8f/bO7MQDBpfvPbkf7h2GhS35O2WKC89UJmg0BsmhDCDUI1m75YDWWuF6k2
+qRAWRCACmSINSoYqYS1ECAZYlIiiMVkEhmxICDCNUkUVqQYNCACCMiQYQkgkIkEk
+G4aIhTzBMK0KFnWipuVxWRrCGpChgkWVQkyUkKJiSaVAlzE1DMoUxaCEiTonVtqu
+z+DmCHZZvmnzHi8i0/b+gf/PvmPTcgQRFYVCkiYpBtJUUdRkQpmqAox0JAHNB7os
+auFa5rvCrmvSRLXQmCfwbr2pMz9Yf5K/Efm6zbPmZCdqe7Zu1/CnSs9z3LBP9RKO
+j40zEvmtEiGmRXmQnFHPoq5pW0IYcKTumb4sQAhqQEGinCew3Y4ZZRHTRyAer8iP
+/w+r55ISYdgIIQIljGUCoMxrJkuU8OE1DRCIFZ4JVhSA+cwQ6RJFSNR0jYWQwogq
++HPVWTbXVrlPXME1XbPCwl4syoTGp4/LkwNJwUDKrBn+hgWCqfP+7F3h19k/ydjI
+5oKKw0PytyvjqK901Znipa32Dqfz3nvd61o+tPOE00USrydwWXx704eBI03jwe7z
+B96gqiXLsvK/LNq39sWaDSlZl55kN2dJgZwfezPb+4+p4y29adsm02/1Dt/dc78s
+1n359Oee+2YbhbfrafbDXcl0XUv24LV0/LFw4/7wtUW5HWdTS7roYIk58W7iiFL7
+6sGKhcFMccoZKC0oPtfdtzr+6NT1jq7jOxfMPBkve562eGv2VaM9lHawrSpDufl9
+zqciq1e+YjXVtd9ZWX3pWWdOi26lxg9tiD7fNNmW6ChuzIXrW280XZzamBhLSTgZ
+o0Wz2MujW8Kve0rjhb8A8qpAsA==
+=dbNJ
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/cassidyk
+
+==================================================================
