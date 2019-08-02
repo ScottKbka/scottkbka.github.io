@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Debugging in Rails</title>
+      <title>Debugging in Rails with Pry, `bundle open` and `puts`</title>
       <link>https://cassidy.codes/blog/2019-08-01-debugging-in-rails/</link>
       <pubDate>Thu, 01 Aug 2019 22:23:11 -0400</pubDate>
       
