@@ -136,7 +136,7 @@ set-window-option -g window-status-current-style fg=&#39;#ff79c6&#39;,bg=&#39;#2
 <p>Here I&rsquo;ve set the default window status to blend in to the rest of the status bar and the active window to be purple with white text. <code>window-status-format</code> is where things get more interesting.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tmux" data-lang="tmux">set -g window-status-current-format &#34;#[fg=#44475a]#[bg=#bd93f9]#[fg=#f8f8f2]#[bg=#bd93f9] #I #W #[fg=#bd93f9]#[bg=#44475a]&#34;
 set -g window-status-format &#34;#[fg=#f8f8f2]#[bg=#44475a]#I #W #[fg=#44475a] &#34;</code></pre></div>
-<p>This looks similar to what we have above, but there&rsquo;s some style tricks we need to do. I wanted to have triangular shapes delineating my windows similar to what Vim Powerline does. In order to get the style to work I have to toggle the foreground and background colours before and after the . Then to display the name of the window I&rsquo;m using <code>#I</code>, which is a short-hand for the <code>window_index</code> variable and <code>#W</code>, which is short for <code>window_name</code></p>
+<p>This looks similar to what we have above, but there&rsquo;s some style tricks we need to do. I wanted to have triangular shapes delineating my windows similar to what Vim Powerline does. In order to get the style to work I have to toggle the foreground and background colours before and after the <code></code>. Then to display the name of the window I&rsquo;m using <code>#I</code>, which is a short-hand for the <code>window_index</code> variable and <code>#W</code>, which is short for <code>window_name</code></p>
 
 <p>Almost done! <code>status-right</code> should look pretty familiar now.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tmux" data-lang="tmux"># status right
@@ -163,7 +163,7 @@ set -ga status-right &#39;#[fg=#bd93f9,bg=#ff79c6]#[fg=#f8f8f2,bg=#bd93f9] %a
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-08-03 17:51:25.798899 -0400 EDT m=&#43;0.129154120">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-08-03 17:59:14.599446 -0400 EDT m=&#43;0.271836273">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
