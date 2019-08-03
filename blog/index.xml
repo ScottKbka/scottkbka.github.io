@@ -18,7 +18,7 @@
       
       <guid>https://cassidy.codes/blog/2019-08-01-debugging-in-rails/</guid>
       <description>This week I got to dig into some debugging that I really enjoyed. Well, if you had asked me in the middle of it I might not have been having fun, but I found a solution! I used a handful of tools to approach debugging and they all gave me a little bit more information to solve the problem that I didn&amp;rsquo;t have before.
-Here is a bit of information on each tool that I used.</description>
+Here is a bit about each tool and what I find useful about it.</description>
     </item>
     
     <item>

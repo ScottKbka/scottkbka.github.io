@@ -55,7 +55,7 @@
 
 <p>This week I got to dig into some debugging that I really enjoyed. Well, if you had asked me in the middle of it I might not have been having fun, but I found a solution! I used a handful of tools to approach debugging and they all gave me a little bit more information to solve the problem that I didn&rsquo;t have before.</p>
 
-<p>Here is a bit of information on each tool that I used. Let me know if you have other Ruby or Rails debugging tips!</p>
+<p>Here is a bit about each tool and what I find useful about it. Let me know if you have other Ruby or Rails debugging tips!</p>
 
 <h2 id="pry">Pry!</h2>
 
@@ -139,7 +139,7 @@ locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_  code  result</code></pre
 =&gt; &#34;cassidy&#34;</code></pre></div>
 <h2 id="bundle-open">Bundle Open</h2>
 
-<p>What happens when you start stepping through a call stack and you find yourself wandering around stack frames that belong to a Ruby Gem you&rsquo;re using. This happens to me a lot and sometimes I like to go right to the source.</p>
+<p>What happens when you start stepping through a call stack in pry and you find yourself wandering around stack frames that belong to a Ruby Gem you&rsquo;re using. When this happens to me I like to go checkout what the code actually looks like in that gem with <code>bundle open</code>.</p>
 
 <p>Here&rsquo;s the error I was working on today. You&rsquo;ll see that the error is raised in a third party library. I might have made a mistake that caused it, but my mistake is so far down the call stack that I don&rsquo;t see it!</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">2019-08-01T21:42:43.628Z 34126 TID-ower3a8uc WARN: NoMethodError: undefined method `body&#39; for nil:NilClass
@@ -152,7 +152,7 @@ locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_  code  result</code></pre
 
 <h2 id="puts"><code>puts</code>!!!</h2>
 
-<p>Sometimes pry isn&rsquo;t going to work for you. This is especially true if you&rsquo;re using a multi-threaded server or Sidekiq to process background jobs. When this happens, you&rsquo;ll get an interactive prompt for a few seconds then you&rsquo;ll get booted out because another process is trying to write logs to the same master process. Argh! This can be frustrating.</p>
+<p>Sometimes pry isn&rsquo;t going to work for you. This is especially true if you&rsquo;re using a multi-threaded web server or Sidekiq to process background jobs. When this happens, you&rsquo;ll get an interactive prompt for a few seconds then you&rsquo;ll get booted out because another process is trying to write logs to the same master process. Argh! This can be frustrating.</p>
 
 <p>My favourite thing to do here is to print my own logs. I try to make these stand out so I don&rsquo;t miss them when the logs are going by. Here&rsquo;s some pseudocode that resembles the problem I was solving today.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#00a8c8">def</span> <span style="color:#75af00">filename</span>
@@ -188,7 +188,7 @@ locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_  code  result</code></pre
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-08-01 23:58:30.184632 -0400 EDT m=&#43;0.075824391">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-08-02 20:05:14.979691 -0400 EDT m=&#43;0.121928530">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
