@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				2019 08 06 Favourite Debugging Trick &middot; Cassidy K
+		</title>
+	
+		
+ 		<link rel="stylesheet" href="/css/style.css">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Cassidy K" />
+	</head>
+	
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Cassidy K</h2>
+				</a>
+				<ul>
+    <li><a href="https://github.com/cassidycodes">GitHub</a></li>
+    <li><a href="https://twitter.com/cassidycodes">Twitter</a></li>
+</ul>
+
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Cassidy K
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-08-06 23:37:38 -0400 EDT">August 6, 2019</time>
+</div>
+
+		<h1 class="post-title">2019 08 06 Favourite Debugging Trick</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>Last week I wrote about some of my favourite debugging tools in Ruby. I forgot one trick that I find super useful!</p>
+
+<p>Today I was writing a script that would iterate through objects in an S3 bucket and group these objects by similar names. The naming structure looked like this:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">original.jpg
+tumb_original.jpg
+profile_original.jpg</code></pre></div>
+<p>So all three of those images should get grouped together because they all come from <code>orignal.jpg</code>. But I got my name comparison muddled and something wasn&rsquo;t working right. It would work perfectly for 200 images then it blew up on the 201st!</p>
+
+<p>Printing logs or putting a binding in a loop like this is gnarly. I don&rsquo;t want to loop through 200 successful iterations to find what I need!</p>
+
+<h2 id="conditional-bindings">Conditional Bindings!</h2>
+
+<p>To solve this problem, I just made my binding conditional.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#111">s3_objects</span><span style="color:#f92672">.</span><span style="color:#111">each</span> <span style="color:#00a8c8">do</span> <span style="color:#f92672">|</span><span style="color:#111">img</span><span style="color:#f92672">|</span>
+  <span style="color:#111">binding</span><span style="color:#f92672">.</span><span style="color:#111">pry</span> <span style="color:#00a8c8">if</span> <span style="color:#111">img</span><span style="color:#f92672">.</span><span style="color:#111">key</span> <span style="color:#f92672">=~</span> <span style="color:#d88200">/badfilename.jpg/</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
+<p>This time we&rsquo;ll only hit the binding if the image key contains the filename that&rsquo;s giving me grief!</p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/blog/2019-08-03-tmux-colour-theme/" class="left arrow">&#8592;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-08-06 23:45:05.038001 -0400 EDT m=&#43;0.108638920">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

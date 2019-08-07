@@ -6,10 +6,21 @@
     <description>Recent content on Cassidy K</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Aug 2019 15:22:43 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 06 Aug 2019 23:37:38 -0400</lastBuildDate>
     
 	<atom:link href="https://cassidy.codes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>2019 08 06 Favourite Debugging Trick</title>
+      <link>https://cassidy.codes/blog/2019-08-06-favourite-debugging-trick/</link>
+      <pubDate>Tue, 06 Aug 2019 23:37:38 -0400</pubDate>
+      
+      <guid>https://cassidy.codes/blog/2019-08-06-favourite-debugging-trick/</guid>
+      <description>Last week I wrote about some of my favourite debugging tools in Ruby. I forgot one trick that I find super useful!
+Today I was writing a script that would iterate through objects in an S3 bucket and group these objects by similar names. The naming structure looked like this:
+original.jpg tumb_original.jpg profile_original.jpg So all three of those images should get grouped together because they all come from orignal.jpg. But I got my name comparison muddled and something wasn&amp;rsquo;t working right.</description>
+    </item>
     
     <item>
       <title>Creating a tmux Colour Theme</title>
