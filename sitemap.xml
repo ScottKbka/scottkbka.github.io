@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://cassidy.codes/blog/2019-08-06-favourite-debugging-trick/</loc>
-    <lastmod>2019-08-06T23:37:38-04:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://cassidy.codes/blog/</loc>
     <lastmod>2019-08-06T23:37:38-04:00</lastmod>
     <priority>0</priority>
@@ -17,6 +12,11 @@
     <loc>https://cassidy.codes/</loc>
     <lastmod>2019-08-06T23:37:38-04:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/blog/2019-08-06-favourite-debugging-trick/</loc>
+    <lastmod>2019-08-06T23:37:38-04:00</lastmod>
   </url>
   
   <url>
