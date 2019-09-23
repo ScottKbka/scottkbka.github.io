@@ -153,25 +153,25 @@
     <span style="color:#111">avi</span>          <span style="color:#f92672">=</span> <span style="color:#00a8c8">AviGlitch</span><span style="color:#f92672">.</span><span style="color:#111">open</span> <span style="color:#111">avifile</span>
     <span style="color:#111">num_frames</span>   <span style="color:#f92672">=</span> <span style="color:#111">avi</span><span style="color:#f92672">.</span><span style="color:#111">frames</span><span style="color:#f92672">.</span><span style="color:#111">count</span>
     <span style="color:#111">start</span>        <span style="color:#f92672">=</span> <span style="color:#111">options</span><span style="color:#f92672">[</span><span style="color:#d88200">&#39;-s&#39;</span><span style="color:#f92672">].</span><span style="color:#111">to_i</span>
-    <span style="color:#111">start_at</span>     <span style="color:#f92672">=</span> <span style="color:#111">start</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">num_frames</span> <span style="color:#111">?</span> <span style="color:#111">start</span> <span style="color:#111">:</span> <span style="color:#111">num_frames</span><span style="color:#d88200">/2
-</span><span style="color:#d88200">    start_at    += 1 if avi.frames[start_at].is_keyframe?
-</span><span style="color:#d88200">    melted       = avi.frames[start_at, 1] * num_frames
-</span><span style="color:#d88200">    if !options[&#39;--decap&#39;]
-</span><span style="color:#d88200">      base   = avi.frames[0..start_at].mutate_keyframes_into_deltaframes!
-</span><span style="color:#d88200">      melted = base.concat melted
-</span><span style="color:#d88200">    end
-</span><span style="color:#d88200">    glitchfile = tmpdir.join &#39;glitch.avi&#39;
-</span><span style="color:#d88200">    melted.to_avi.output glitchfile
-</span><span style="color:#d88200">    if options[&#39;--raw&#39;]
-</span><span style="color:#d88200">      cmd = Cocaine::CommandLine.new &#39;cp&#39;, &#39;:infile :outfile&#39;
-</span><span style="color:#d88200">    else
-</span><span style="color:#d88200">      cmd = Cocaine::CommandLine.new &#39;ffmpeg&#39;, &#39;-i :infile   -q:v 0 :outfile&#39;
-</span><span style="color:#d88200">    end
-</span><span style="color:#d88200">    cmd.run infile: glitchfile.to_s, outfile: options[&#39;-o&#39;]
-</span><span style="color:#d88200">  end
-</span><span style="color:#d88200">rescue Docopt::Exit =&gt; e
-</span><span style="color:#d88200">  puts e.message
-</span><span style="color:#d88200">end</span></code></pre></div>
+    <span style="color:#111">start_at</span>     <span style="color:#f92672">=</span> <span style="color:#111">start</span> <span style="color:#f92672">&lt;</span> <span style="color:#111">num_frames</span> <span style="color:#111">?</span> <span style="color:#111">start</span> <span style="color:#111">:</span> <span style="color:#111">num_frames</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+    <span style="color:#111">start_at</span>    <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span> <span style="color:#00a8c8">if</span> <span style="color:#111">avi</span><span style="color:#f92672">.</span><span style="color:#111">frames</span><span style="color:#f92672">[</span><span style="color:#111">start_at</span><span style="color:#f92672">].</span><span style="color:#111">is_keyframe?</span>
+    <span style="color:#111">melted</span>       <span style="color:#f92672">=</span> <span style="color:#111">avi</span><span style="color:#f92672">.</span><span style="color:#111">frames</span><span style="color:#f92672">[</span><span style="color:#111">start_at</span><span style="color:#111">,</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">*</span> <span style="color:#111">num_frames</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#f92672">!</span><span style="color:#111">options</span><span style="color:#f92672">[</span><span style="color:#d88200">&#39;--decap&#39;</span><span style="color:#f92672">]</span>
+      <span style="color:#111">base</span>   <span style="color:#f92672">=</span> <span style="color:#111">avi</span><span style="color:#f92672">.</span><span style="color:#111">frames</span><span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">..</span><span style="color:#111">start_at</span><span style="color:#f92672">].</span><span style="color:#111">mutate_keyframes_into_deltaframes!</span>
+      <span style="color:#111">melted</span> <span style="color:#f92672">=</span> <span style="color:#111">base</span><span style="color:#f92672">.</span><span style="color:#111">concat</span> <span style="color:#111">melted</span>
+    <span style="color:#00a8c8">end</span>
+    <span style="color:#111">glitchfile</span> <span style="color:#f92672">=</span> <span style="color:#111">tmpdir</span><span style="color:#f92672">.</span><span style="color:#111">join</span> <span style="color:#d88200">&#39;glitch.avi&#39;</span>
+    <span style="color:#111">melted</span><span style="color:#f92672">.</span><span style="color:#111">to_avi</span><span style="color:#f92672">.</span><span style="color:#111">output</span> <span style="color:#111">glitchfile</span>
+    <span style="color:#00a8c8">if</span> <span style="color:#111">options</span><span style="color:#f92672">[</span><span style="color:#d88200">&#39;--raw&#39;</span><span style="color:#f92672">]</span>
+      <span style="color:#111">cmd</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Cocaine</span><span style="color:#f92672">::</span><span style="color:#00a8c8">CommandLine</span><span style="color:#f92672">.</span><span style="color:#111">new</span> <span style="color:#d88200">&#39;cp&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;:infile :outfile&#39;</span>
+    <span style="color:#00a8c8">else</span>
+      <span style="color:#111">cmd</span> <span style="color:#f92672">=</span> <span style="color:#00a8c8">Cocaine</span><span style="color:#f92672">::</span><span style="color:#00a8c8">CommandLine</span><span style="color:#f92672">.</span><span style="color:#111">new</span> <span style="color:#d88200">&#39;ffmpeg&#39;</span><span style="color:#111">,</span> <span style="color:#d88200">&#39;-i :infile   -q:v 0 :outfile&#39;</span>
+    <span style="color:#00a8c8">end</span>
+    <span style="color:#111">cmd</span><span style="color:#f92672">.</span><span style="color:#111">run</span> <span style="color:#d88200">infile</span><span style="color:#111">:</span> <span style="color:#111">glitchfile</span><span style="color:#f92672">.</span><span style="color:#111">to_s</span><span style="color:#111">,</span> <span style="color:#d88200">outfile</span><span style="color:#111">:</span> <span style="color:#111">options</span><span style="color:#f92672">[</span><span style="color:#d88200">&#39;-o&#39;</span><span style="color:#f92672">]</span>
+  <span style="color:#00a8c8">end</span>
+<span style="color:#00a8c8">rescue</span> <span style="color:#00a8c8">Docopt</span><span style="color:#f92672">::</span><span style="color:#00a8c8">Exit</span> <span style="color:#f92672">=&gt;</span> <span style="color:#111">e</span>
+  <span style="color:#111">puts</span> <span style="color:#111">e</span><span style="color:#f92672">.</span><span style="color:#111">message</span>
+<span style="color:#00a8c8">end</span></code></pre></div>
 
 <p>Here’s the result. You’ll notice that the audio cuts out in this one. This is because not every frame is synchronized with the audio file, so when we glitch here we loose the audio.</p>
 
@@ -206,7 +206,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-08-06 23:46:00.11646 -0400 EDT m=&#43;0.181188757">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-09-22 21:33:12.842889 -0400 EDT m=&#43;0.671859754">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
