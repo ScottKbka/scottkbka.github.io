@@ -73,7 +73,7 @@
 <p>Go couldn&rsquo;t find my library! This is because my <code>GOPATH</code> was empty and Go looked in the default location, which was <code>~/go</code>. My code lived somewhere else!</p>
 
 <p>One of the TAs at the event said that he sets the <code>GOPATH</code> every time he <code>cd</code>s into a new project. I decided to make an alias for this so that I could set the <code>GOPATH</code> quickly when I moved into a new directory.</p>
-<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Set GOPATH to current dirextory and give helpful feedback.</span>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Set GOPATH to current directory and give helpful feedback.</span>
 <span style="color:#111">alias</span> <span style="color:#111">setgopath</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;export GOPATH=`pwd` &amp;&amp; echo \&#34;GOPATH is set to </span><span style="color:#111">$GOPATH</span><span style="color:#d88200">\&#34;&#34;</span>
 <span style="color:#75715e"># Really tiny alias because I&#39;m lazy.</span>
 <span style="color:#111">alias</span> <span style="color:#111">sgp</span><span style="color:#f92672">=</span>setgopath</code></pre></div>
@@ -164,10 +164,13 @@
 <p>To create a slice, you use the builtin function <code>make</code>, which is used to initialize <a href="https://devdocs.io/go/builtin/index#make">slices, maps, and chans</a>. What&rsquo;s a chan? Good question. But I&rsquo;ll leave that for another blog post because I have no idea.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
 
-<span style="color:#f92672">import</span> <span style="color:#d88200">&#34;fmt&#34;</span>
+<span style="color:#f92672">import</span><span style="color:#111">(</span>
+  <span style="color:#d88200">&#34;fmt&#34;</span>
+  <span style="color:#d88200">&#34;strings&#34;</span>
+<span style="color:#111">)</span>
 
 <span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
-  <span style="color:#75715e">// Initialize a slice with four members.
+  <span style="color:#75715e">// Initialize a slice with members.
 </span><span style="color:#75715e"></span>  <span style="color:#75af00">mySlice</span> <span style="color:#f92672">:=</span> <span style="color:#111">make</span><span style="color:#111">([]</span><span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#ae81ff">4</span><span style="color:#111">)</span>
 
   <span style="color:#75af00">mySlice</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;My&#34;</span>
@@ -177,7 +180,7 @@
   <span style="color:#75715e">// Append two strings to the slice!
 </span><span style="color:#75715e"></span>  <span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#75af00">mySlice</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;is&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;good!&#34;</span><span style="color:#111">)</span>
 
-  <span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">PrintLn</span><span style="color:#111">(</span><span style="color:#75af00">mySlice</span><span style="color:#111">)</span>
+  <span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">PrintLn</span><span style="color:#111">(</span><span style="color:#75af00">strings</span><span style="color:#111">.</span><span style="color:#75af00">Join</span><span style="color:#111">(</span><span style="color:#75af00">mySlice</span><span style="color:#111">,</span> <span style="color:#d88200">&#34; &#34;</span><span style="color:#111">))</span>
   <span style="color:#75715e">// =&gt; My slice of pizza is good!
 </span><span style="color:#75715e"></span><span style="color:#111">}</span></code></pre></div>
 <h3 id="range">Range</h3>
@@ -225,7 +228,7 @@
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-09-22 21:55:21.574981 -0400 EDT m=&#43;0.065974628">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-09-23 11:53:53.1051 -0400 EDT m=&#43;0.284509423">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
