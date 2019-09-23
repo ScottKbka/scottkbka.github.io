@@ -6,10 +6,20 @@
     <description>Recent content on Cassidy K</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 06 Aug 2019 23:37:38 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 22 Sep 2019 21:37:54 -0400</lastBuildDate>
     
 	<atom:link href="https://cassidy.codes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Learning Go</title>
+      <link>https://cassidy.codes/blog/2019-09-22-go-workshop/</link>
+      <pubDate>Sun, 22 Sep 2019 21:37:54 -0400</pubDate>
+      
+      <guid>https://cassidy.codes/blog/2019-09-22-go-workshop/</guid>
+      <description>This weekend I went to a workshop to learn Go that was organized by Denise Yu. I wasn&amp;rsquo;t able to stay for the whole thing, but I got so learn some fundamentals of Go. It was really nice to focus a day learning something new.
+GOPATH The first thing that caught me off guard was how Go looks for Go code. In the workshop, they glazed over this topic by suggesting that everyone start writing code in ~/go.</description>
+    </item>
     
     <item>
       <title>Favourite Debugging Trick</title>

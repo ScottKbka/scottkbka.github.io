@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<title>
+				Learning Go &middot; Cassidy K
+		</title>
+	
+		
+ 		<link rel="stylesheet" href="/css/style.css">
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Cassidy K" />
+	</head>
+	
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					<h2 class="nav-title">Cassidy K</h2>
+				</a>
+				<ul>
+    <li><a href="https://github.com/cassidycodes">GitHub</a></li>
+    <li><a href="https://twitter.com/cassidycodes">Twitter</a></li>
+</ul>
+
+			</div>
+		</nav>
+
+        
+
+<main>
+	<div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Cassidy K
+        <br>
+        <span>on&nbsp;</span><time datetime="2019-09-22 21:37:54 -0400 EDT">September 22, 2019</time>
+</div>
+
+		<h1 class="post-title">Learning Go</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+<p>This weekend I went to a workshop to learn Go that was organized by <a href="https://twitter.com/deniseyu21">Denise Yu</a>. I wasn&rsquo;t able to stay for the whole thing, but I got so learn some fundamentals of Go. It was really nice to focus a day learning something new.</p>
+
+<h2 id="gopath">GOPATH</h2>
+
+<p>The first thing that caught me off guard was how Go looks for Go code. In the workshop, they glazed over this topic by suggesting that everyone start writing code in <code>~/go</code>. It makes sense to me that they did that so that people could focus on writing code rather than configuring their setup. But of course, I did things differently and this broke all sorts of stuff!</p>
+
+<p>According to the <a href="https://golang.org/cmd/go/#hdr-GOPATH_environment_variable">Go Language Docs</a>, the <code>GOPATH</code> environment variable lists all the places on your computer to look for Go code. So when you write <code>import &quot;mylibrary&quot;</code>, Go will look inside all the directories listed in the <code>GOPATH</code> to find <code>mylibrary</code>.</p>
+
+<p>When I had a directory structure like this:</p>
+
+<pre><code>myproject
+  main.go
+  src
+    mylibrary
+      mylibrary
+</code></pre>
+
+<p>Go couldn&rsquo;t find my library! This is because my <code>GOPATH</code> was empty and Go looked in the default location, which was <code>~/go</code>. My code lived somewhere else!</p>
+
+<p>One of the TAs at the event said that he sets the <code>GOPATH</code> every time he <code>cd</code>s into a new project. I decided to make an alias for this so that I could set the <code>GOPATH</code> quickly when I moved into a new directory.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Set GOPATH to current dirextory and give helpful feedback.</span>
+<span style="color:#111">alias</span> <span style="color:#111">setgopath</span><span style="color:#f92672">=</span><span style="color:#d88200">&#34;export GOPATH=`pwd` &amp;&amp; echo \&#34;GOPATH is set to </span><span style="color:#111">$GOPATH</span><span style="color:#d88200">\&#34;&#34;</span>
+<span style="color:#75715e"># Really tiny alias because I&#39;m lazy.</span>
+<span style="color:#111">alias</span> <span style="color:#111">sgp</span><span style="color:#f92672">=</span>setgopath</code></pre></div>
+<p>So now when I tried to run my <code>main.go</code> code, the GOPATH was set to <code>myproject</code> and Go was able to find <code>mylibrary</code>.</p>
+
+<p><em>NOTE</em>: If you&rsquo;re on a different system, <a href="https://github.com/golang/go/wiki/SettingGOPATH">Go has docs on how to set your GOPATH</a></p>
+
+<h2 id="src-is-inferred"><code>src</code> is Inferred!</h2>
+
+<p>Go looks for three directories in the <code>GOPATH</code>:</p>
+
+<ol>
+<li><code>src</code> holds source code for your libraries.</li>
+<li><code>bin</code> holds compiled binaries for your libraries.</li>
+<li><code>pkg</code> holds compiled package objects.</li>
+</ol>
+
+<p>Here&rsquo;s something I don&rsquo;t know. What&rsquo;s the difference between a compiled binary and a compiled package object? Hrm&hellip;maybe that&rsquo;s a blog post for another day.</p>
+
+<h2 id="basic-structure-of-a-file">Basic structure of a file.</h2>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// This line tells you what the package name is. Packages with the name `main` are are usually compiled into a standalone binary. Packages that are meant to be used by other Go programs will have another name, like myStringTools, for example.
+</span><span style="color:#75715e"></span><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+
+<span style="color:#75715e">// The import statement tells us what packages to import. I&#39;m going to import fmt here because it gives us tools for formatting out put to the console.
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> <span style="color:#d88200">&#34;fmt&#34;</span>
+
+<span style="color:#75715e">// The entry point! We named our package main, and the entry point matches. When we build this program as a binary, this is the function that will get called.
+</span><span style="color:#75715e"></span><span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">PrintLn</span><span style="color:#111">(</span><span style="color:#d88200">&#34;Don&#39;t go! Stay!&#34;</span><span style="color:#111">)</span>
+<span style="color:#111">}</span></code></pre></div>
+<h2 id="language-basics">Language Basics</h2>
+
+<h3 id="values">Values</h3>
+
+<p>Go has all the common value types like strings, integers, floats, and booleans. One thing I found interesting is that strings cannot be declared with single quotes. They either need to use backticks (for string literals) or double quotes.</p>
+
+<p>Single quotes are used to denote &ldquo;<a href="https://devdocs.io/go/builtin/index#rune">runes</a>&rdquo;, which I don&rsquo;t totally understand, but they seem to stand in for 32-bit integers in some way.</p>
+
+<h3 id="variables">Variables</h3>
+
+<p>Go is a strongly typed language. Meaning once you&rsquo;ve told Go that a certain variable is an integer, for example, Go will expect that variable to always be an integer.</p>
+
+<p>There are two ways to declare a variable:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#d88200">&#34;fmt&#34;</span>
+
+<span style="color:#75715e">// Declare the variable and its type in the global scope.
+</span><span style="color:#75715e"></span><span style="color:#00a8c8">var</span> <span style="color:#75af00">myInt</span> <span style="color:#00a8c8">int</span>
+<span style="color:#75715e">// Assign a value to it!
+</span><span style="color:#75715e"></span><span style="color:#75af00">myInt</span> <span style="color:#111">=</span> <span style="color:#ae81ff">1</span>
+
+<span style="color:#75715e">// Variables assigned with a capital letter at the beginning will be imported into other files when you use `import`.
+</span><span style="color:#75715e"></span><span style="color:#00a8c8">var</span> <span style="color:#75af00">MyExport</span> <span style="color:#00a8c8">int</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+  <span style="color:#75715e">// := lets you declare and assign a value in one line!
+</span><span style="color:#75715e"></span>  <span style="color:#75af00">myOtherInt</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#111">}</span></code></pre></div>
+<p>One trick with <code>:=</code> is that you cannot use it in the global scope. You can only declare and assign variables in this way inside of a function.</p>
+
+<p>Values in Go have what&rsquo;s called a <em>zero-value</em>. This means that if you&rsquo;ve declared a variable but you have not assigned a value, it has a default value. For integers, this is zero, for strings it&rsquo;s an empty string.</p>
+
+<h3 id="for">For</h3>
+
+<p><code>for</code> loops look very familiar to me:</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#d88200">&#34;fmt&#34;</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+  <span style="color:#00a8c8">for</span> <span style="color:#75af00">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span><span style="color:#111">;</span> <span style="color:#75af00">i</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">10</span><span style="color:#111">;</span> <span style="color:#75af00">i</span><span style="color:#f92672">++</span> <span style="color:#111">{</span>
+    <span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">Println</span><span style="color:#111">(</span><span style="color:#75af00">j</span><span style="color:#111">)</span>
+  <span style="color:#111">}</span>
+<span style="color:#111">}</span></code></pre></div>
+<p>The first section is the local variable inside of the loop. The second section is the condition, in this case, keep looping until <code>i</code> is less than or equal to 10. And the third section is what to do when at the end of the loop. Here we&rsquo;re saying to increment <code>i</code> by one.</p>
+
+<h3 id="arrays-slices">Arrays &amp; Slices</h3>
+
+<p>I thought the implementation of arrays and slices to be interesting. Arrays are numbered lists. In a language like Ruby, you can keep tacking data on to the end of an array without worrying about how big it&rsquo;s getting.</p>
+
+<p>In Go, you can&rsquo;t do that. If I declare an array like this: <code>var a [5]int</code>. Go create an array of five integers with their zero-values: <code>[0,0,0,0,0]</code>. I cannot add any more items to this array! Why&rsquo;s that? Programs need to ask the underlying operating system for space in memory. If I ask for enough room for five integers, that&rsquo;s all I get! Need more? We&rsquo;ll I&rsquo;d have to ask for more then copy my original array over to the new array.</p>
+
+<p>Sounds like lots of work, right? We&rsquo;ll check out a slice!</p>
+
+<p>A slice is like an array, but some of the heavy lifting is built into it. Need to add more data to the end of a slice? Go ahead!</p>
+
+<p>To create a slice, you use the builtin function <code>make</code>, which is used to initialize <a href="https://devdocs.io/go/builtin/index#make">slices, maps, and chans</a>. What&rsquo;s a chan? Good question. But I&rsquo;ll leave that for another blog post because I have no idea.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#d88200">&#34;fmt&#34;</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+  <span style="color:#75715e">// Initialize a slice with two members.
+</span><span style="color:#75715e"></span>  <span style="color:#75af00">mySlice</span> <span style="color:#f92672">:=</span> <span style="color:#111">make</span><span style="color:#111">([]</span><span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#ae81ff">2</span><span style="color:#111">)</span>
+
+  <span style="color:#75af00">mySlice</span><span style="color:#111">[</span><span style="color:#ae81ff">0</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;of&#34;</span>
+  <span style="color:#75af00">mySlice</span><span style="color:#111">[</span><span style="color:#ae81ff">1</span><span style="color:#111">]</span> <span style="color:#111">=</span> <span style="color:#d88200">&#34;pizza&#34;</span>
+  <span style="color:#75715e">// Append two strings to the slice!
+</span><span style="color:#75715e"></span>  <span style="color:#111">append</span><span style="color:#111">(</span><span style="color:#75af00">mySlice</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;is&#34;</span><span style="color:#111">,</span> <span style="color:#d88200">&#34;good!&#34;</span><span style="color:#111">)</span>
+
+  <span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">PrintLn</span><span style="color:#111">(</span><span style="color:#75af00">mySlice</span><span style="color:#111">)</span>
+  <span style="color:#75715e">// =&gt; My slice of pizza is good!
+</span><span style="color:#75715e"></span><span style="color:#111">}</span></code></pre></div>
+<h3 id="range">Range</h3>
+
+<p>Final one for today. Ranges! I&rsquo;m not totally sure I have the language right here, but a range seems to be an iterator or enumerator. If you have slice, for example, you can use it to iterate over the data in a <code>for</code> loop.</p>
+<div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#75af00">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#d88200">&#34;fmt&#34;</span>
+
+<span style="color:#00a8c8">func</span> <span style="color:#75af00">main</span><span style="color:#111">()</span> <span style="color:#111">{</span>
+  <span style="color:#75af00">sentence</span> <span style="color:#f92672">:=</span> <span style="color:#d88200">&#34;My slice of pizza is good.&#34;</span>
+  <span style="color:#75af00">words</span> <span style="color:#111">=</span> <span style="color:#75af00">strings</span><span style="color:#111">.</span><span style="color:#75af00">Split</span><span style="color:#111">(</span><span style="color:#75af00">sentence</span><span style="color:#111">,</span> <span style="color:#d88200">&#34; &#34;</span><span style="color:#111">)</span>
+
+  <span style="color:#00a8c8">for</span> <span style="color:#75af00">index</span><span style="color:#111">,</span> <span style="color:#75af00">word</span> <span style="color:#f92672">:=</span> <span style="color:#00a8c8">range</span> <span style="color:#75af00">words</span> <span style="color:#111">{</span>
+    <span style="color:#75af00">fmt</span><span style="color:#111">.</span><span style="color:#75af00">Println</span><span style="color:#111">(</span><span style="color:#75af00">word</span><span style="color:#111">)</span>
+  <span style="color:#111">}</span>
+  <span style="color:#75715e">// =&gt; My
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// =&gt; slice
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// =&gt; of
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// =&gt; pizza
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// =&gt; is
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// =&gt; good.
+</span><span style="color:#75715e"></span><span style="color:#111">}</span></code></pre></div>
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I had fun learning Go! The language feels very familiar to me. The things I&rsquo;ve found tricky so far were understanding what a range was, and figuring out my <code>GOPATH</code>. I&rsquo;m happy I could figure those things out and write a few programs that worked. I&rsquo;m sure if I worked in Go more frequently, I&rsquo;d find something new go get stumped on though!</p>
+
+<p>You can checkout all my code from the workshop at the links below. I&rsquo;ll also link to the guide we were using.</p>
+
+<p>My code: <a href="https://github.com/cassidycodes/hellogo">https://github.com/cassidycodes/hellogo</a>
+Practical Go: <a href="https://idiomat.gitbook.io/gobridge/">https://idiomat.gitbook.io/gobridge/</a></p>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/blog/2019-08-06-favourite-debugging-trick/" class="left arrow">&#8592;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			<span>
+			&copy; <time datetime="2019-09-22 21:40:07.604063 -0400 EDT m=&#43;0.062719850">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>

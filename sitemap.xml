@@ -4,14 +4,19 @@
   
   <url>
     <loc>https://cassidy.codes/blog/</loc>
-    <lastmod>2019-08-06T23:37:38-04:00</lastmod>
+    <lastmod>2019-09-22T21:37:54-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cassidy.codes/</loc>
-    <lastmod>2019-08-06T23:37:38-04:00</lastmod>
+    <lastmod>2019-09-22T21:37:54-04:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/blog/2019-09-22-go-workshop/</loc>
+    <lastmod>2019-09-22T21:37:54-04:00</lastmod>
   </url>
   
   <url>
