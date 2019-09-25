@@ -20,5 +20,14 @@
       <description></description>
     </item>
     
+    <item>
+      <title>dotfiles</title>
+      <link>https://cassidy.codes/series/dotfiles/</link>
+      <pubDate>Sat, 03 Aug 2019 15:22:43 -0400</pubDate>
+      
+      <guid>https://cassidy.codes/series/dotfiles/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
