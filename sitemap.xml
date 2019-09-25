@@ -4,89 +4,91 @@
   
   <url>
     <loc>https://cassidy.codes/blog/</loc>
-    <lastmod>2019-09-22T21:37:54-04:00</lastmod>
+    <lastmod>2019-09-24T20:53:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cassidy.codes/</loc>
-    <lastmod>2019-09-22T21:37:54-04:00</lastmod>
+    <lastmod>2019-09-24T20:53:45-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2019-09-22-go-workshop/</loc>
-    <lastmod>2019-09-22T21:37:54-04:00</lastmod>
+    <lastmod>2019-09-24T20:53:45-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/series/</loc>
+    <lastmod>2019-09-24T20:53:45-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/series/go/</loc>
+    <lastmod>2019-09-24T20:53:45-04:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2019-08-06-favourite-debugging-trick/</loc>
-    <lastmod>2019-08-06T23:37:38-04:00</lastmod>
+    <lastmod>2019-08-06T23:46:06-04:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2019-08-03-tmux-colour-theme/</loc>
-    <lastmod>2019-08-03T15:22:43-04:00</lastmod>
+    <lastmod>2019-08-03T17:59:20-04:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2019-08-01-debugging-in-rails/</loc>
-    <lastmod>2019-08-01T22:23:11-04:00</lastmod>
+    <lastmod>2019-08-02T20:07:23-04:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2018/05/26/concatenating-mysql-results-with-group-by/</loc>
-    <lastmod>2018-05-26T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-14T19:47:35-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2018/04/12/return-raw-data-from-active-record/</loc>
-    <lastmod>2018-04-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-06T09:17:50-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2018-03-22-rewrite-git-history/</loc>
-    <lastmod>2018-03-22T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-05T22:27:33-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2017/05/12-toronto-sound-prints/</loc>
-    <lastmod>2017-05-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-06T09:30:34-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/</loc>
-    <lastmod>2017-04-25T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-06T09:30:34-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2015/10/06/video-glitch-art-in-ruby/</loc>
-    <lastmod>2015-10-06T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-06T09:30:34-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2015/05/25/kirby-cms/</loc>
-    <lastmod>2015-05-25T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-05T22:27:33-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2015/03/10/scraping-city-toronto-data/</loc>
-    <lastmod>2015-03-10T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-05T22:27:33-05:00</lastmod>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2015/01/26/arrays-vs-hashes-ruby/</loc>
-    <lastmod>2015-01-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://cassidy.codes/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://cassidy.codes/tags/</loc>
-    <priority>0</priority>
+    <lastmod>2019-01-05T22:27:33-05:00</lastmod>
   </url>
   
 </urlset>
