@@ -6,10 +6,37 @@
     <description>Recent content in Series on Cassidy K</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Sep 2019 21:37:54 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 28 Sep 2019 12:54:41 -0400</lastBuildDate>
     
 	<atom:link href="https://cassidy.codes/series/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ruby</title>
+      <link>https://cassidy.codes/series/ruby/</link>
+      <pubDate>Sat, 28 Sep 2019 12:54:41 -0400</pubDate>
+      
+      <guid>https://cassidy.codes/series/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ruby on Rails</title>
+      <link>https://cassidy.codes/series/ruby-on-rails/</link>
+      <pubDate>Sat, 28 Sep 2019 12:54:41 -0400</pubDate>
+      
+      <guid>https://cassidy.codes/series/ruby-on-rails/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Testing</title>
+      <link>https://cassidy.codes/series/testing/</link>
+      <pubDate>Sat, 28 Sep 2019 12:54:41 -0400</pubDate>
+      
+      <guid>https://cassidy.codes/series/testing/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>go</title>

@@ -3,26 +3,49 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://cassidy.codes/blog/2019-09-28-rspec-shared-examples-contexts/</loc>
+    <lastmod>2019-09-28T12:54:41-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://cassidy.codes/blog/</loc>
-    <lastmod>2019-09-24T21:04:05-04:00</lastmod>
+    <lastmod>2019-09-28T12:54:41-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cassidy.codes/</loc>
-    <lastmod>2019-09-24T21:04:05-04:00</lastmod>
+    <lastmod>2019-09-28T12:54:41-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/series/ruby/</loc>
+    <lastmod>2019-09-28T12:54:41-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/series/ruby-on-rails/</loc>
+    <lastmod>2019-09-28T12:54:41-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/series/</loc>
+    <lastmod>2019-09-28T12:54:41-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/series/testing/</loc>
+    <lastmod>2019-09-28T12:54:41-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://cassidy.codes/blog/2019-09-22-go-workshop/</loc>
     <lastmod>2019-09-24T20:53:45-04:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://cassidy.codes/series/</loc>
-    <lastmod>2019-09-24T21:04:05-04:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
