@@ -56,9 +56,9 @@
     "copyrightHolder" : "Cassidy K",
     "copyrightYear" : "2019",
     "datePublished": "2019-09-28 12:54:41 -0400 EDT",
-    "dateModified" : "2019-09-28 15:35:42 -0400 EDT",
+    "dateModified" : "2019-09-28 15:52:26 -0400 EDT",
     "url" : "https:\/\/cassidy.codes\/blog\/2019-09-28-rspec-shared-examples-contexts\/",
-    "wordCount" : "800",
+    "wordCount" : "798",
     "keywords" : [ "RSpec","Shared Examples","Shared Contexts","Testing","Blog" ]
 }
 </script>
@@ -71,7 +71,7 @@
 
 <meta property="og:image" content="https://cassidy.codes/images/posts/rspec-logo.png" />
 <meta property="article:published_time" content="2019-09-28T12:54:41-04:00" />
-<meta property="article:modified_time" content="2019-09-28T15:35:42-04:00" /><meta property="og:site_name" content="Cassidy K" />
+<meta property="article:modified_time" content="2019-09-28T15:52:26-04:00" /><meta property="og:site_name" content="Cassidy K" />
 
 
 
@@ -190,12 +190,12 @@ Finished in 0.02916 seconds (files took 1.28 seconds to load)
 <p>What happens if you need to pass some parameters that might be different in one context but not the other? Shared examples accept parameters! In the example below, I am creating an instance of the subject class and passing it into the shared example.</p>
 <div class="highlight"><pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># spec/models/door_spec.rb</span>
 <span style="color:#00a8c8">RSpec</span><span style="color:#f92672">.</span><span style="color:#111">describe</span> <span style="color:#00a8c8">Door</span><span style="color:#111">,</span> <span style="color:#d88200">type</span><span style="color:#111">:</span> <span style="color:#d88200">:model</span> <span style="color:#00a8c8">do</span>
-  <span style="color:#111">it_behaves_like</span> <span style="color:#d88200">&#39;Lockable&#39;</span><span style="color:#111">,</span> <span style="color:#111">subject</span><span style="color:#f92672">.</span><span style="color:#111">create</span>
+  <span style="color:#111">it_behaves_like</span> <span style="color:#d88200">&#39;Lockable&#39;</span>
 <span style="color:#00a8c8">end</span>
 
 <span style="color:#75715e"># spec/models/phone_spec.rb</span>
 <span style="color:#00a8c8">RSpec</span><span style="color:#f92672">.</span><span style="color:#111">describe</span> <span style="color:#00a8c8">Phone</span><span style="color:#111">,</span> <span style="color:#d88200">type</span><span style="color:#111">:</span> <span style="color:#d88200">:model</span> <span style="color:#00a8c8">do</span>
-  <span style="color:#111">it_behaves_like</span> <span style="color:#d88200">&#39;Lockable&#39;</span><span style="color:#111">,</span> <span style="color:#111">subject</span><span style="color:#f92672">.</span><span style="color:#111">create</span>
+  <span style="color:#111">it_behaves_like</span> <span style="color:#d88200">&#39;Lockable&#39;</span>
 <span style="color:#00a8c8">end</span>
 
 <span style="color:#75715e"># spec/support/shared_examples/lockable_spec.rb</span>
@@ -287,7 +287,7 @@ Finished in 0.02916 seconds (files took 1.28 seconds to load)
 
         		<footer>
 			<span>
-			&copy; <time datetime="2019-09-28 15:52:20.855856 -0400 EDT m=&#43;0.111457872">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2019-10-22 21:47:26.625196 -0400 EDT m=&#43;0.237779707">2019</time> Cassidy K. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
