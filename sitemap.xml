@@ -107,11 +107,6 @@
   </url>
   
   <url>
-    <loc>https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/</loc>
-    <lastmod>2019-01-06T09:30:34-05:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://cassidy.codes/blog/2015/10/06/video-glitch-art-in-ruby/</loc>
     <lastmod>2019-01-06T09:30:34-05:00</lastmod>
   </url>
@@ -129,6 +124,11 @@
   <url>
     <loc>https://cassidy.codes/blog/2015/01/26/arrays-vs-hashes-ruby/</loc>
     <lastmod>2019-01-05T22:27:33-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/</loc>
+    <lastmod>2019-01-06T09:30:34-05:00</lastmod>
   </url>
   
 </urlset>

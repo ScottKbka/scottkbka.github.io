@@ -116,15 +116,6 @@ We worked with Ryerson University’s SMART Lab to create visual interpretations
     </item>
     
     <item>
-      <title>Optimizing GIFS with FFMPEG</title>
-      <link>https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/</link>
-      <pubDate>Tue, 25 Apr 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/</guid>
-      <description>A few months back I was working on an iOS app that delivered GIFs to users. The idea was that someone would visit one of our 3D photo booths, and get an animated avatar created. We could then render animation frames to PNGs using our custom software. The problem was that some of our animations were rather long, so we needed to crunch the gifs down to the smallest possible size.</description>
-    </item>
-    
-    <item>
       <title>Video Glitch Art in Ruby</title>
       <link>https://cassidy.codes/blog/2015/10/06/video-glitch-art-in-ruby/</link>
       <pubDate>Tue, 06 Oct 2015 00:00:00 +0000</pubDate>
@@ -162,6 +153,15 @@ Why Are We Doing This? A couple weeks back, I was chatting with Matt Elliot abou
       <guid>https://cassidy.codes/blog/2015/01/26/arrays-vs-hashes-ruby/</guid>
       <description>This weekend I created a small, Ruby CRM application that stores contact information. You can check out my code on GitHub. While I was building this app, most people were using an array to store their contact information, but I wanted to use a Hash. I kew that theoretically Hashes are fster than Arrays, but I didn&amp;rsquo;t know why.
 Arrays vs Hashes The quick answer is that Hashes in Ruby are more easily accessible than an item in an array.</description>
+    </item>
+    
+    <item>
+      <title>Optimizing GIFS with FFMPEG</title>
+      <link>https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://cassidy.codes/blog/2017/04/25/ffmpeg-frames-to-gif-optimization/</guid>
+      <description>A few months back I was working on an iOS app that delivered GIFs to users. The idea was that someone would visit one of our 3D photo booths, and get an animated avatar created. We could then render animation frames to PNGs using our custom software. The problem was that some of our animations were rather long, so we needed to crunch the gifs down to the smallest possible size.</description>
     </item>
     
   </channel>
