@@ -6,10 +6,22 @@
     <description>Recent content in Blogs on Cassidy K</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Sep 2019 12:54:41 -0400</lastBuildDate>
+    <lastBuildDate>Sat, 14 Dec 2019 10:22:00 -0500</lastBuildDate>
     
 	<atom:link href="https://cassidy.codes/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Don&#39;t Trust the Cops: Sometimes Rubocop is Wrong</title>
+      <link>https://cassidy.codes/blog/2019-12-14-rubo-cop-is-wrong/</link>
+      <pubDate>Sat, 14 Dec 2019 10:22:00 -0500</pubDate>
+      
+      <guid>https://cassidy.codes/blog/2019-12-14-rubo-cop-is-wrong/</guid>
+      <description>My team at work recently upgraded our version of Rubocop, the popular linter used to enforce good Ruby code style. With the upgrade we got a whole bunch of new suggestions and warnings about style violations.
+One of them that tripped us up was the Performance/Count rule.
+According to the Rubocop docs:
+ This cop is used to identify usages of count on an Enumerable that follow calls to select or reject.</description>
+    </item>
     
     <item>
       <title>Shared Examples and Contexts in RSpec</title>

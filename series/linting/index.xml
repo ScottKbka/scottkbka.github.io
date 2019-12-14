@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ruby on Cassidy K</title>
-    <link>https://cassidy.codes/series/ruby/</link>
-    <description>Recent content in Ruby on Cassidy K</description>
+    <title>Linting on Cassidy K</title>
+    <link>https://cassidy.codes/series/linting/</link>
+    <description>Recent content in Linting on Cassidy K</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 14 Dec 2019 10:22:00 -0500</lastBuildDate>
     
-	<atom:link href="https://cassidy.codes/series/ruby/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://cassidy.codes/series/linting/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -21,16 +21,6 @@
 One of them that tripped us up was the Performance/Count rule.
 According to the Rubocop docs:
  This cop is used to identify usages of count on an Enumerable that follow calls to select or reject.</description>
-    </item>
-    
-    <item>
-      <title>Shared Examples and Contexts in RSpec</title>
-      <link>https://cassidy.codes/blog/2019-09-28-rspec-shared-examples-contexts/</link>
-      <pubDate>Sat, 28 Sep 2019 12:54:41 -0400</pubDate>
-      
-      <guid>https://cassidy.codes/blog/2019-09-28-rspec-shared-examples-contexts/</guid>
-      <description>When I first learned testing in Rails, I learned RSpec, but then in my last job, I wrote most of my tests in minitest. I enjoyed the challenge of learning a new test framework and found the tests super fast!
-But recently, I&amp;rsquo;ve been working on a project in RSpec again and I have a renewed appreciation for it! In this post, I&amp;rsquo;m going to talk about how to define and use shared examples and shared contexts in RSpec.</description>
     </item>
     
   </channel>
